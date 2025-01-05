@@ -1,0 +1,237 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background: #121212; /* Darker background for better contrast */
+  color: #E0E0E0; /* Light text color for better contrast */
+  font-size: 18px; /* Increased base font size */
+}
+
+.app {
+  background: #1E1E1E; /* Darker background for the app container */
+  width: 90%;
+  max-width: 700px; /* Increased max-width for better readability */
+  margin: 30px auto; /* More margin for better spacing */
+  border-radius: 10px;
+  padding: 25px; /* Increased padding */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow for better separation */
+}
+
+.app h1 {
+  font-size: 28px; /* Increased font size for the title */
+  color: #FFFFFF; /* White color for better contrast */
+  font-weight: 600;
+  border-bottom: 2px solid #333; /* Thicker border */
+  padding-bottom: 20px;     
+}
+
+a {
+  color: #1E90FF; /* A vibrant blue color */
+  text-decoration: none; /* Remove the underline */
+  font-weight: 500; /* Medium weight for a bolder look */
+  transition: color 0.3s ease, border-bottom 0.3s ease; /* Smooth transition */
+  border-bottom: 2px solid transparent; /* Add a bottom border */
+}
+
+a:hover {
+  outline: none;
+  color: skyblue;
+  border-bottom: 2px solid; /* Show the bottom border on hover */
+}
+
+a:focus, a:active, a:visited {
+  outline: none;
+  color: #1E90FF;
+}
+
+.quiz {
+  padding: 25px 0 100px;
+}
+
+.quiz h2 {
+  font-size: 20px; /* Larger font size for quiz questions */
+  color: #FFFFFF; /* White color for better contrast */
+  font-weight: 600;
+  margin-bottom: 20px; /* Increased margin-bottom for better spacing */
+}
+
+.btn {
+  background: #2C2C2C; /* Darker button background */
+  color: #FFFFFF; /* White text for better contrast */
+  font-size: 18px;
+  font-weight: 500;
+  width: 100%; 
+  border: 1px solid #444; /* Slightly lighter border */
+  padding: 15px; /* Increased padding */
+  margin: 10px 0; /* Increased margin */
+  text-align: left;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s; 
+}
+
+.btn:hover:not([disabled]) {
+  background: #444444; /* Lighter gray on hover for better feedback */
+  color: #E0E0E0;
+}
+
+.btn:disabled:not(.chosen) {
+  cursor: not-allowed;
+  background: #555555; /* Darker gray for disabled button */
+  color: #888888; /* Lighter text for disabled state */
+}
+
+/* Container for the Next button */
+.button-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px; /* Padding around the button */
+  display: flex;
+  justify-content: center; /* Center the button horizontally */
+  background-color: #1E1E1E; /* Match the background color */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Add a slight shadow for separation */
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+/* Next button styles */
+#next-btn {
+  background-color: #0066CC; /* Bright blue background */
+  color: #FFFFFF; /* White text for better contrast */
+  border: none;
+  padding: 15px 25px; /* Padding inside the button */
+  font-size: 18px; /* Larger font size */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  white-space: nowrap; /* Prevent the button text from wrapping */
+}
+
+/* Hover effect for enabled button */
+#next-btn:hover {
+  background-color: #003a75; /* Darker blue on hover */
+}
+
+#language-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 300px; /* Optional: limit button width */
+  margin: 0 auto 20px auto; /* Center align and add bottom margin */
+  padding: 25px 0 0px;
+}
+
+.lang-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #0066CC;
+  color: #FFFFFF;
+  border: none;
+  padding: 15px;
+  margin-bottom: 20px; /* Vertical margin between buttons */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  min-height: 60px; /* Ensures all buttons are at least 60px tall */
+}
+
+.lang-btn:hover {
+  background-color: #003a75;
+}
+
+.lang-btn.selected {
+  background-color: #FF69B4; /* Hot pink background when selected */
+  color: #FFFFFF;
+}
+
+#start-quiz-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #0066CC;
+  color: #FFFFFF;
+  border: none;
+  padding: 15px;
+  margin-top: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  min-height: 60px; /* Ensure consistent button height */
+}
+
+#start-quiz-btn:hover {
+  background-color: #003a75;
+}
+
+.chosen {
+  background: #FF69B4; /* Hot pink background */
+  color: #FFFFFF; /* White text */
+  border: 2px solid #FF1493; /* Darker pink border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.7); /* Strong pink glowing shadow */
+  transition: transform 0.2s ease-in-out, background 0.3s ease;
+  animation: bounce 1s infinite;
+}
+
+.framed-text {
+  border: 5px solid; /* Gold-colored border */
+  padding: 20px;  
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Soft shadow around the frame */
+  margin-bottom: 20px; /* Margin for spacing around the frame */
+  text-align: center; /* Centered text inside the frame */
+  font-weight: bold;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-5px);
+  }
+}
+
+/* Optional: Add a glow effect on hover */
+.chosen:hover {
+  background: #FF1493; /* Darker pink on hover */
+  box-shadow: 0 0 20px rgba(255, 20, 147, 0.8); /* Stronger glow on hover */
+}
+
+/* Media queries for responsive design */
+@media (max-width: 600px) {
+  .app {
+      margin: 15px;
+      padding: 20px;
+  }
+  .app h1 {
+      font-size: 24px;
+      padding-bottom: 15px;
+  }
+  .quiz h2 {
+      font-size: 18px;
+  }
+  .btn {
+      font-size: 18px;
+      padding: 10px;
+  }
+  #next-btn {
+      width: 100%;
+      padding: 15px;
+  }
+}
