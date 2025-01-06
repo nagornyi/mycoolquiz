@@ -242,21 +242,18 @@ export const questions = {
             ]
         },
         {
-            question: `<br><br><p>I.</p><br>
-                        <p>As the Liberty lads o’er the sea<br>
+            question: `<br><br><p>As the Liberty lads o’er the sea<br>
                         Bought their freedom, and cheaply, with blood,<br>
                         So we, boys, we<br>
                         Will die fighting, or live free,<br>
                         And down with all kings but King Ludd!</p><br>
 
-                        <p>II.</p><br>
                         <p>When the web that we weave is complete,<br>
                         And the shuttle exchanged for the sword,<br>
                         We will fling the winding sheet<br>
                         O’er the despot at our feet,<br>
                         And dye it deep in the gore he has pour’d.</p><br>
 
-                        <p>III.</p><br>
                         <p>Though black as his heart its hue,<br>
                         Since his veins are corrupted to mud,<br>
                         Yet this is the dew<br>

@@ -68,9 +68,7 @@ function selectAnswer(e) {
 
 function showScore() {
     resetState();
-    questionElement.style.display = 'none';
-
-    var final_msg = localisations[selectedLanguage].final_score_msg+`${score} `;
+    questionElement.style.display = 'none';    
 
     const MIN_SCORE = questions[selectedLanguage].reduce((minScore, question) => {
         const lowestScore = Math.min(...question.answers.map(answer => answer.score));
@@ -80,6 +78,8 @@ function showScore() {
         const highestScore = Math.max(...question.answers.map(answer => answer.score));
         return maxScore + highestScore;
     }, 0);
+
+    var final_msg = `<b>${localisations[selectedLanguage].final_score_msg_1}: ${score} ${localisations[selectedLanguage].final_score_msg_2} ${MAX_SCORE}</b>`;
     
     // Add emoji and result based on score
     var bottomLine;
@@ -90,7 +90,7 @@ function showScore() {
     } else {        
         bottomLine = bottomlines.highscore;
     }    
-    final_msg += ` ${bottomLine.emoji}<br>${bottomLine[selectedLanguage]}<br>`;
+    final_msg += ` ${bottomLine.emoji}<br><br>${bottomLine[selectedLanguage]}<br>`;
     
     quizInfo.style.display = "block";
     quizInfo.style.borderColor = bottomLine.color;
