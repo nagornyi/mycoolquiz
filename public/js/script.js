@@ -1,6 +1,4 @@
-import {localisations} from './localisations.js'
-import {bottomlines} from './bottomlines.js'
-import {questions} from './questions.js'
+import { uiconfig } from './uiconfig.js';
 
 const languageForm = document.getElementById('language-selection');
 const startQuizBtn = document.getElementById('start-quiz-btn');
@@ -12,6 +10,8 @@ const nextButton = document.getElementById("next-btn");
 
 // Default language
 let selectedLanguage = 'uk';
+var questions = [];
+var localisations = {};
 
 let currentQuestionsIndex = 0;
 let score = 0;
@@ -22,15 +22,15 @@ function selectQuizLanguage()  {
     languageForm.style.display = "block";
 }
 
-function startQuiz()  {
+async function startQuiz()  {
     currentQuestionsIndex = 0;
-    score = 0;
+    score = 0;    
     showQuestion();
 }
 
 function showQuestion() {
     resetState();
-    let currentQuestion = questions[selectedLanguage][currentQuestionsIndex];
+    let currentQuestion = questions[currentQuestionsIndex];
     let questionNo = currentQuestionsIndex + 1;
     questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
 
@@ -43,7 +43,7 @@ function showQuestion() {
         button.addEventListener("click", selectAnswer)
     });
 
-    nextButton.innerText = localisations[selectedLanguage].next_question_btn;
+    nextButton.innerText = uiconfig[selectedLanguage].next_question_btn;
 }
 
 function resetState() {
@@ -70,31 +70,39 @@ function showScore() {
     resetState();
     questionElement.style.display = 'none';    
 
-    const MIN_SCORE = questions[selectedLanguage].reduce((minScore, question) => {
+    const MIN_SCORE = questions.reduce((minScore, question) => {
         const lowestScore = Math.min(...question.answers.map(answer => answer.score));
         return minScore + lowestScore;
     }, 0);
-    const MAX_SCORE = questions[selectedLanguage].reduce((maxScore, question) => {
+    const MAX_SCORE = questions.reduce((maxScore, question) => {
         const highestScore = Math.max(...question.answers.map(answer => answer.score));
         return maxScore + highestScore;
     }, 0);
 
-    var final_msg = `<b>${localisations[selectedLanguage].final_score_msg_1}: ${score} ${localisations[selectedLanguage].final_score_msg_2} ${MAX_SCORE}</b>`;
+    var final_msg = `<b>${uiconfig[selectedLanguage].final_score_msg_1}: ${score} ${uiconfig[selectedLanguage].final_score_msg_2} ${MAX_SCORE}</b>`;
     
     // Add emoji and result based on score
-    var bottomLine;
-    if (score <= MIN_SCORE + (MAX_SCORE - MIN_SCORE) / 3) {        
-        bottomLine = bottomlines.lowscore;
-    } else if (score <= MIN_SCORE + 2 * (MAX_SCORE - MIN_SCORE) / 3) {        
-        bottomLine = bottomlines.avgscore;
-    } else {        
-        bottomLine = bottomlines.highscore;
-    }    
-    final_msg += ` ${bottomLine.emoji}<br><br>${bottomLine[selectedLanguage]}<br>`;
+    var bottomLineText;
+    var bottomLineEmoji;
+    var bottomLineColor;
+    if (score <= MIN_SCORE + (MAX_SCORE - MIN_SCORE) / 3) {
+        bottomLineText = localisations.lowscore;
+        bottomLineEmoji = uiconfig.lowscore.emoji;
+        bottomLineColor = uiconfig.lowscore.color;
+    } else if (score <= MIN_SCORE + 2 * (MAX_SCORE - MIN_SCORE) / 3) {
+        bottomLineText = localisations.avgscore;
+        bottomLineEmoji = uiconfig.avgscore.emoji;
+        bottomLineColor = uiconfig.avgscore.color;
+    } else {
+        bottomLineText = localisations.highscore;
+        bottomLineEmoji = uiconfig.highscore.emoji;
+        bottomLineColor = uiconfig.highscore.color;
+    }
+    final_msg += ` ${bottomLineEmoji}<br><br>${bottomLineText}<br>`;
     
     quizInfo.style.display = "block";
-    quizInfo.style.borderColor = bottomLine.color;
-    quizInfo.style.color = bottomLine.color;
+    quizInfo.style.borderColor = bottomLineColor;
+    quizInfo.style.color = bottomLineColor;
     quizInfo.innerHTML = final_msg;
 }
 
@@ -103,42 +111,65 @@ document.addEventListener('DOMContentLoaded', function() {
   const languageButtons = document.querySelectorAll('.lang-btn');
 
   languageButtons.forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', async function() {
           languageButtons.forEach(btn => btn.classList.remove('selected'));
           this.classList.add('selected');
           selectedLanguage = this.getAttribute('data-lang');
+          await initializeQuiz(selectedLanguage);
           languageForm.style.display = 'none';
-          quizName.innerText = localisations[selectedLanguage].quiz_name;
+          quizName.innerText = localisations.quiz_name;
           quizInfo.style.display = 'block';
-          quizInfo.innerHTML = localisations[selectedLanguage].quiz_description;
+          quizInfo.innerHTML = localisations.quiz_description;
           // Show the Start Quiz button
-          startQuizBtn.innerText = localisations[selectedLanguage].quiz_start_btn;
+          startQuizBtn.innerText = uiconfig[selectedLanguage].quiz_start_btn;
           startQuizBtn.style.display = 'block';          
       });
   });
 });
 
-startQuizBtn.addEventListener('click', () => {
+startQuizBtn.addEventListener('click', async () => {
   startQuizBtn.style.display = 'none';
   quizInfo.style.display = 'none';
-  startQuiz();
+  await startQuiz();
 });
 
 function handleNextButton() {
     currentQuestionsIndex++;
-    if (currentQuestionsIndex < questions[selectedLanguage].length) {
+    if (currentQuestionsIndex < questions.length) {
         showQuestion();
     } else {
         showScore();
     }
 }
 
-nextButton.addEventListener("click", () => {
-    if (currentQuestionsIndex < questions[selectedLanguage].length) {
+nextButton.addEventListener("click", async () => {
+    if (currentQuestionsIndex < questions.length) {
         handleNextButton();
     } else {
-        startQuiz();
+        await startQuiz();
     }
 })
+
+// Fetch data dynamically from Redis via the API
+async function fetchData(endpoint) {
+  try {
+      const response = await fetch(endpoint);
+      if (!response.ok) throw new Error(`Failed to fetch data: ${response.statusText}`);
+      return await response.json();
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+}
+
+// Initialize the quiz with the fetched localised data
+async function initializeQuiz(lang) {
+  questions = await fetchData(`/api/questions/${lang}`);  
+  localisations = await fetchData(`/api/localisations/${lang}`);  
+  
+  if (!questions || !localisations) {
+      console.error('Failed to initialize quiz due to missing data');
+  }
+}
 
 selectQuizLanguage();
