@@ -126,6 +126,7 @@ function showScore() {
     quizInfo.innerHTML = final_msg;
     nextButton.innerHTML = uiconfig[selectedLanguage].quiz_restart_btn;
     nextButton.style.display = "block";
+    nextButton.blur();
 }
 
 // Handle language selection
