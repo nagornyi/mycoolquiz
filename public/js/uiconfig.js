@@ -2,25 +2,31 @@ export const uiconfig = {
     uk: {
         quiz_start_btn: "Почати тест",
         next_question_btn: "Далі",
-        final_score_msg_1: "🎉 РЕЗУЛЬТАТ",
-        final_score_msg_2: "БАЛІВ З"
+        final_result: "${score} з ${MAX_SCORE} балів"
     },
     en: {
         quiz_start_btn: "Start the quiz",
         next_question_btn: "Next",
-        final_score_msg_1: "🎉 SCORE",
-        final_score_msg_2: "POINTS OUT OF"
+        final_result: "${score} out of ${MAX_SCORE} points"
+    },
+    maxscore: {
+      color: "#50C878",
+      bordercolor: "orange",
+      emoji: "🎊"
     },
     highscore: {
-      color: "green",
+      color: "#50C878",
+      bordercolor: "orange",
       emoji: "😻"
     },
     avgscore: {
-        color: "cyan",
-        emoji: "😸"
+      color: "#50C878",
+      bordercolor: "orange",
+      emoji: "😸"
     },
     lowscore: {
-        color: "orange",
-        emoji: "😼"
+      color: "#50C878",
+      bordercolor: "orange",
+      emoji: "😼"
     }
 };

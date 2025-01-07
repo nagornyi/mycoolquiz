@@ -18,7 +18,7 @@ let score = 0;
 
 function selectQuizLanguage()  {
     resetState();
-    quizName.innerText = "Language";
+    quizName.innerText = "Quiz Language";
     languageForm.style.display = "block";
 }
 
@@ -79,30 +79,43 @@ function showScore() {
         return maxScore + highestScore;
     }, 0);
 
-    var final_msg = `<b>${uiconfig[selectedLanguage].final_score_msg_1}: ${score} ${uiconfig[selectedLanguage].final_score_msg_2} ${MAX_SCORE}</b>`;
+    var final_msg = `<b>🎉 ${uiconfig[selectedLanguage].final_result.replace(/\${score}/g, score).replace(/\${MAX_SCORE}/g, MAX_SCORE)}</b>`;
     
     // Add emoji and result based on score
     var bottomLineText;
     var bottomLineEmoji;
     var bottomLineColor;
-    if (score <= MIN_SCORE + (MAX_SCORE - MIN_SCORE) / 3) {
+    var bottomLineBorderColor;
+    if (score == MAX_SCORE) {
+        // Max score
+        bottomLineText = localisations.maxscore;
+        bottomLineEmoji = uiconfig.maxscore.emoji;
+        bottomLineColor = uiconfig.maxscore.color;
+        bottomLineBorderColor = uiconfig.maxscore.bordercolor;
+    } else if (score <= MIN_SCORE + (MAX_SCORE - MIN_SCORE) / 3) {
+        // Low score
         bottomLineText = localisations.lowscore;
         bottomLineEmoji = uiconfig.lowscore.emoji;
         bottomLineColor = uiconfig.lowscore.color;
+        bottomLineBorderColor = uiconfig.lowscore.bordercolor;
     } else if (score <= MIN_SCORE + 2 * (MAX_SCORE - MIN_SCORE) / 3) {
+        // Average score
         bottomLineText = localisations.avgscore;
         bottomLineEmoji = uiconfig.avgscore.emoji;
         bottomLineColor = uiconfig.avgscore.color;
+        bottomLineBorderColor = uiconfig.lowscore.bordercolor;
     } else {
+        // High score
         bottomLineText = localisations.highscore;
         bottomLineEmoji = uiconfig.highscore.emoji;
         bottomLineColor = uiconfig.highscore.color;
+        bottomLineBorderColor = uiconfig.lowscore.bordercolor;
     }
     final_msg += ` ${bottomLineEmoji}<br><br>${bottomLineText}<br>`;
     
-    quizInfo.style.display = "block";
-    quizInfo.style.borderColor = bottomLineColor;
+    quizInfo.style.display = "block";    
     quizInfo.style.color = bottomLineColor;
+    quizInfo.style.borderColor = bottomLineBorderColor;
     quizInfo.innerHTML = final_msg;
 }
 
