@@ -9,12 +9,12 @@ const answerButton = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 
 // Default language
-let selectedLanguage = 'uk';
+var selectedLanguage = 'en';
+var currentQuestionsIndex = 0;
+var score = 0;
+
 var questions = [];
 var localisations = {};
-
-let currentQuestionsIndex = 0;
-let score = 0;
 
 function selectQuizLanguage()  {
     resetState();
@@ -33,7 +33,11 @@ function showQuestion() {
     let currentQuestion = questions[currentQuestionsIndex];
     let questionNo = currentQuestionsIndex + 1;
     questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
-
+    questionElement.style.display = 'block';
+    // Randomise the answers if the configuration is set to true
+    if (uiconfig.randomise_answers) {
+        currentQuestion.answers = currentQuestion.answers.sort(() => Math.random() - 0.5);
+    }
     currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
         button.innerHTML = answer.text;
@@ -47,8 +51,9 @@ function showQuestion() {
 }
 
 function resetState() {
-    languageForm.style.display = 'none';    
-    nextButton.style.display = 'none'    
+    languageForm.style.display = 'none';
+    nextButton.style.display = 'none'
+    quizInfo.style.display = 'none'
     while(answerButton.firstChild){
         answerButton.removeChild(answerButton.firstChild);
     }
@@ -68,7 +73,7 @@ function selectAnswer(e) {
 
 function showScore() {
     resetState();
-    questionElement.style.display = 'none';    
+    questionElement.style.display = 'none';
 
     const MIN_SCORE = questions.reduce((minScore, question) => {
         const lowestScore = Math.min(...question.answers.map(answer => answer.score));
@@ -116,7 +121,11 @@ function showScore() {
     quizInfo.style.display = "block";    
     quizInfo.style.color = bottomLineColor;
     quizInfo.style.borderColor = bottomLineBorderColor;
+    quizInfo.style.fontSize = "20px";
+    quizInfo.style.textAlign = "center";
     quizInfo.innerHTML = final_msg;
+    nextButton.innerHTML = uiconfig[selectedLanguage].quiz_restart_btn;
+    nextButton.style.display = "block";
 }
 
 // Handle language selection
@@ -135,14 +144,13 @@ document.addEventListener('DOMContentLoaded', function() {
           quizInfo.innerHTML = localisations.quiz_description;
           // Show the Start Quiz button
           startQuizBtn.innerText = uiconfig[selectedLanguage].quiz_start_btn;
-          startQuizBtn.style.display = 'block';          
+          startQuizBtn.style.display = 'block';
       });
   });
 });
 
 startQuizBtn.addEventListener('click', async () => {
   startQuizBtn.style.display = 'none';
-  quizInfo.style.display = 'none';
   await startQuiz();
 });
 
@@ -177,8 +185,12 @@ async function fetchData(endpoint) {
 
 // Initialize the quiz with the fetched localised data
 async function initializeQuiz(lang) {
-  questions = await fetchData(`/api/questions/${lang}`);  
-  localisations = await fetchData(`/api/localisations/${lang}`);  
+  questions = await fetchData(`/api/questions/${lang}`);
+  // Randomise the questions if the configuration is set to true
+  if (uiconfig.randomise_questions) {
+      questions = questions.sort(() => Math.random() - 0.5);
+  }
+  localisations = await fetchData(`/api/localisations/${lang}`);
   
   if (!questions || !localisations) {
       console.error('Failed to initialize quiz due to missing data');
