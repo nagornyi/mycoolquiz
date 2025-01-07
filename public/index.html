@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="app">
+    <div class="app" id="app">
         <h1 id="quiz-name"></h1>
         <div id="language-selection" style="display: none;">
           <button class="lang-btn" data-lang="uk">Українська</button>
@@ -24,6 +24,7 @@
                 <button id="next-btn" style="display: none;"></button>
             </div>
         </div>
+        <canvas id="fireworks"></canvas>
     </div>
     <script src="js/script.js" type="module"></script>
 </body>

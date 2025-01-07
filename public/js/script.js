@@ -1,5 +1,7 @@
 import { uiconfig } from './uiconfig.js';
+import { startFireworks, stopFireworks } from './fireworks.js';
 
+const appContainer = document.getElementById('app');
 const languageForm = document.getElementById('language-selection');
 const startQuizBtn = document.getElementById('start-quiz-btn');
 const quizInfo = document.getElementById('quiz-info');
@@ -24,7 +26,7 @@ function selectQuizLanguage()  {
 
 async function startQuiz()  {
     currentQuestionsIndex = 0;
-    score = 0;    
+    score = 0;
     showQuestion();
 }
 
@@ -51,6 +53,9 @@ function showQuestion() {
 }
 
 function resetState() {
+    stopFireworks();
+    appContainer.classList.remove("app-clear");
+    appContainer.classList.add("app");
     languageForm.style.display = 'none';
     nextButton.style.display = 'none'
     quizInfo.style.display = 'none'
@@ -84,7 +89,7 @@ function showScore() {
         return maxScore + highestScore;
     }, 0);
 
-    var final_msg = `<b>🎉 ${uiconfig[selectedLanguage].final_result.replace(/\${score}/g, score).replace(/\${MAX_SCORE}/g, MAX_SCORE)}</b>`;
+    var final_msg = `<div class="final-score">🎉 ${uiconfig[selectedLanguage].final_result.replace(/\${score}/g, score).replace(/\${MAX_SCORE}/g, MAX_SCORE)}`;
     
     // Add emoji and result based on score
     var bottomLineText;
@@ -116,17 +121,19 @@ function showScore() {
         bottomLineColor = uiconfig.highscore.color;
         bottomLineBorderColor = uiconfig.lowscore.bordercolor;
     }
-    final_msg += ` ${bottomLineEmoji}<br><br>${bottomLineText}<br>`;
+    final_msg += ` ${bottomLineEmoji}</div>${bottomLineText}<br>`;
     
-    quizInfo.style.display = "block";    
+    appContainer.classList.remove("app");
+    appContainer.classList.add("app-clear");
+    quizInfo.style.display = "block";
     quizInfo.style.color = bottomLineColor;
     quizInfo.style.borderColor = bottomLineBorderColor;
-    quizInfo.style.fontSize = "20px";
-    quizInfo.style.textAlign = "center";
+    quizInfo.classList.remove("framed-text");
+    quizInfo.classList.add("framed-result");
     quizInfo.innerHTML = final_msg;
     nextButton.innerHTML = uiconfig[selectedLanguage].quiz_restart_btn;
     nextButton.style.display = "block";
-    nextButton.blur();
+    startFireworks();
 }
 
 // Handle language selection
@@ -142,7 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
           languageForm.style.display = 'none';
           quizName.innerText = localisations.quiz_name;
           quizInfo.style.display = 'block';
-          quizInfo.innerHTML = localisations.quiz_description;
+          quizInfo.innerHTML = `<b>${uiconfig[selectedLanguage].number_of_questions}:</b> ${questions.length}
+          <br><br>
+          <b>${uiconfig[selectedLanguage].quiz_description}:</b> ${localisations.quiz_description}`;
           // Show the Start Quiz button
           startQuizBtn.innerText = uiconfig[selectedLanguage].quiz_start_btn;
           startQuizBtn.style.display = 'block';

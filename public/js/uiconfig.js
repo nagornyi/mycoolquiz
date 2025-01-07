@@ -3,13 +3,17 @@ export const uiconfig = {
       quiz_start_btn: "Start the quiz",
       next_question_btn: "Next",
       quiz_restart_btn: "Restart the quiz",
+      number_of_questions: "Number of questions in the quiz",
+      quiz_description: "Quiz description",
       final_result: "${score} out of ${MAX_SCORE} points"
     },
     uk: {
-        quiz_start_btn: "Почати тест",
-        next_question_btn: "Далі",
-        quiz_restart_btn: "Спробувати ще раз",
-        final_result: "${score} з ${MAX_SCORE} балів"
+      quiz_start_btn: "Почати тест",
+      next_question_btn: "Далі",
+      quiz_restart_btn: "Спробувати ще раз",
+      number_of_questions: "Кількість питань у тесті",
+      quiz_description: "Опис тесту",
+      final_result: "${score} з ${MAX_SCORE} балів"
     },
     randomise_questions: true,
     randomise_answers: true,
