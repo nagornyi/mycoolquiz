@@ -45,7 +45,7 @@ function showQuestion() {
         button.innerHTML = answer.text;
         button.classList.add("btn");
         answerButton.appendChild(button);
-        button.dataset.score = Number(answer.score)
+        button.dataset.score = answer.score;
         button.addEventListener("click", selectAnswer)
     });
 
@@ -67,11 +67,24 @@ function resetState() {
 }
 
 function selectAnswer(e) {
-    const selectedBtn = e.target    
+    const selectedBtn = e.target
+    if (uiconfig.highlight_correct_answer) {
+      if (selectedBtn.dataset.score.toLowerCase() === 'true') {
+        selectedBtn.classList.add("correct");
+        score++;        
+      } else {
+        selectedBtn.classList.add("incorrect");        
+      }
+    } else {
+      selectedBtn.classList.add("neutral");
+      score += Number(selectedBtn.dataset.score);
+    }
     selectedBtn.classList.add("chosen");
-    score += Number(selectedBtn.dataset.score);
     Array.from(answerButton.children).forEach(button => {
-        button.disabled = true;
+      if (uiconfig.highlight_correct_answer && button.dataset.score.toLowerCase() === 'true') {
+        button.classList.add("correct");
+      }
+      button.disabled = true;
     });
     nextButton.style.display = "block";
 }

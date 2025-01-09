@@ -17,6 +17,7 @@ export const uiconfig = {
     },
     randomise_questions: true,
     randomise_answers: true,
+    highlight_correct_answer: true,
     maxscore: {
       color: "#50C878",
       bordercolor: "orange",
