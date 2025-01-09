@@ -21,10 +21,6 @@ export const questions = {
                   In the morning glad I see;<br>
                   My foe outstretched beneath the tree.</p>`,
       answers: [
-        { text: "John Keats", score: 0 },
-        { text: "Lord Byron", score: 0 },
-        { text: "William Shakespeare", score: 0 },
-        { text: "John Milton", score: 0 },
         { text: "William Wordsworth", score: 0 },
         { text: "William Blake", score: 1 },
         { text: "Percy Bysshe Shelley", score: 0 }
@@ -48,11 +44,7 @@ export const questions = {
       answers: [
         { text: "John Keats", score: 1 },
         { text: "Lord Byron", score: 0 },
-        { text: "William Shakespeare", score: 0 },
-        { text: "John Milton", score: 0 },
-        { text: "William Wordsworth", score: 0 },
-        { text: "William Blake", score: 0 },
-        { text: "Percy Bysshe Shelley", score: 0 }
+        { text: "John Milton", score: 0 }
       ]
     },
     {
@@ -74,12 +66,8 @@ export const questions = {
                   Which the tree shall renew<br>
                   Of Liberty, planted by Ludd!</p>`,
       answers: [
-        { text: "John Keats", score: 0 },
         { text: "Lord Byron", score: 1 },
         { text: "William Shakespeare", score: 0 },
-        { text: "John Milton", score: 0 },
-        { text: "William Wordsworth", score: 0 },
-        { text: "William Blake", score: 0 },
         { text: "Percy Bysshe Shelley", score: 0 }
       ]
     },
@@ -103,14 +91,10 @@ export const questions = {
                   Tu-who;<br>
                   Tu-whit, tu-who: a merry note,<br>
                   While greasy Joan doth keel the pot.</p>`,
-      answers: [
-        { text: "John Keats", score: 0 },
-        { text: "Lord Byron", score: 0 },
-        { text: "William Shakespeare", score: 1 },
-        { text: "John Milton", score: 0 },
+      answers: [        
         { text: "William Wordsworth", score: 0 },
-        { text: "William Blake", score: 0 },
-        { text: "Percy Bysshe Shelley", score: 0 }
+        { text: "Percy Bysshe Shelley", score: 0 },
+        { text: "William Shakespeare", score: 1 }
       ]
     },
     {
@@ -128,13 +112,9 @@ export const questions = {
                   Is kingly; thousands at his bidding speed<br>
                   And post o’er land and ocean without rest:<br>
                   They also serve who only stand and wait.”`,
-      answers: [
-        { text: "John Keats", score: 0 },
-        { text: "Lord Byron", score: 0 },
-        { text: "William Shakespeare", score: 0 },
-        { text: "John Milton", score: 1 },
+      answers: [        
         { text: "William Wordsworth", score: 0 },
-        { text: "William Blake", score: 0 },
+        { text: "John Milton", score: 1 },
         { text: "Percy Bysshe Shelley", score: 0 }
       ]
     },
@@ -167,10 +147,6 @@ export const questions = {
                   And then my heart with pleasure fills,<br>
                   And dances with the daffodils.</p>`,
       answers: [
-        { text: "John Keats", score: 0 },
-        { text: "Lord Byron", score: 0 },
-        { text: "William Shakespeare", score: 0 },
-        { text: "John Milton", score: 0 },
         { text: "William Wordsworth", score: 1 },
         { text: "William Blake", score: 0 },
         { text: "Percy Bysshe Shelley", score: 0 }
@@ -194,10 +170,6 @@ export const questions = {
       answers: [
         { text: "John Keats", score: 0 },
         { text: "Lord Byron", score: 0 },
-        { text: "William Shakespeare", score: 0 },
-        { text: "John Milton", score: 0 },
-        { text: "William Wordsworth", score: 0 },
-        { text: "William Blake", score: 0 },
         { text: "Percy Bysshe Shelley", score: 1 }
       ]
     }
@@ -219,11 +191,7 @@ export const questions = {
       answers: [                
         { text: "Євген Плужник", score: 0 },
         { text: "Майк Йогансен", score: 1 },
-        { text: "Михайль Семенко", score: 0 },
-        { text: "Микола Зеров", score: 0 },
-        { text: "Богдан-Ігор Антонич", score: 0 },
-        { text: "Олена Теліга", score: 0 },
-        { text: "Валер'ян Поліщук", score: 0 }
+        { text: "Михайль Семенко", score: 0 }
       ]
     },
     {
@@ -242,13 +210,9 @@ export const questions = {
                   Мій день єдиний! Неповторне свято!<br>
                   Найвищий шпиль — і початок до спаду.</p>`,
       answers: [
-        { text: "Євген Плужник", score: 0 },
-        { text: "Майк Йогансен", score: 0 },
-        { text: "Михайль Семенко", score: 0 },
         { text: "Микола Зеров", score: 0 },
         { text: "Богдан-Ігор Антонич", score: 0 },
-        { text: "Олена Теліга", score: 1 },
-        { text: "Валер'ян Поліщук", score: 0 }
+        { text: "Олена Теліга", score: 1 }
       ]
     },
     {
@@ -266,13 +230,9 @@ export const questions = {
                   Дві паралелі — квадратовий рай.<br>
                   І тверді тінь… І трепетний і тьмяний<br>
                   Безсмертний світ… Живи! Твори! Вмирай!</p>`,
-      answers: [                
+      answers: [
         { text: "Євген Плужник", score: 1 },
-        { text: "Майк Йогансен", score: 0 },
         { text: "Михайль Семенко", score: 0 },
-        { text: "Микола Зеров", score: 0 },
-        { text: "Богдан-Ігор Антонич", score: 0 },
-        { text: "Олена Теліга", score: 0 },
         { text: "Валер'ян Поліщук", score: 0 }
       ]
     },
@@ -291,14 +251,10 @@ export const questions = {
                   Щастя безмежного в місті над бухтою<br>
                   Чекаю я вечора хмарно-роздумного<br>
                   Зустрінутись з нею, квапливо-безрухою.</p>`,
-      answers: [        
-        { text: "Євген Плужник", score: 0 },
+      answers: [
         { text: "Майк Йогансен", score: 0 },
         { text: "Михайль Семенко", score: 1 },
-        { text: "Микола Зеров", score: 0 },
-        { text: "Богдан-Ігор Антонич", score: 0 },
-        { text: "Олена Теліга", score: 0 },
-        { text: "Валер'ян Поліщук", score: 0 }
+        { text: "Олена Теліга", score: 0 }
       ]
     },
     {
@@ -326,12 +282,8 @@ export const questions = {
                   і мотуз вішальників для живих приносить щастя.</p>`,
       answers: [
         { text: "Євген Плужник", score: 0 },
-        { text: "Майк Йогансен", score: 0 },
-        { text: "Михайль Семенко", score: 0 },
         { text: "Микола Зеров", score: 0 },
-        { text: "Богдан-Ігор Антонич", score: 1 },
-        { text: "Олена Теліга", score: 0 },
-        { text: "Валер'ян Поліщук", score: 0 }
+        { text: "Богдан-Ігор Антонич", score: 1 }
       ]
     },
     {
@@ -350,11 +302,7 @@ export const questions = {
                   Щоб аж піднятись до етеру мислів,<br>
                   До гострих смаків почувань!`,
       answers: [
-        { text: "Євген Плужник", score: 0 },
         { text: "Майк Йогансен", score: 0 },
-        { text: "Михайль Семенко", score: 0 },
-        { text: "Микола Зеров", score: 0 },
-        { text: "Богдан-Ігор Антонич", score: 0 },
         { text: "Олена Теліга", score: 0 },
         { text: "Валер'ян Поліщук", score: 1 }
       ]
@@ -377,14 +325,10 @@ export const questions = {
                   <p>І в тихий час, як западає ніч,<br>
                   Поважно гомонять старі каштани<br>
                   І в небо зносять міріади свіч.</p>`,
-      answers: [
-        { text: "Євген Плужник", score: 0 },
-        { text: "Майк Йогансен", score: 0 },
-        { text: "Михайль Семенко", score: 0 },
+      answers: [        
         { text: "Микола Зеров", score: 1 },
-        { text: "Богдан-Ігор Антонич", score: 0 },
-        { text: "Олена Теліга", score: 0 },
-        { text: "Валер'ян Поліщук", score: 0 }
+        { text: "Михайль Семенко", score: 0 },
+        { text: "Євген Плужник", score: 0 }
       ]
     }
   ]
