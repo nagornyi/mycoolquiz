@@ -17,6 +17,7 @@ var score = 0;
 
 var questions = [];
 var localisations = {};
+const questionScores = {};
 
 function selectQuizLanguage()  {
     resetState();
@@ -36,17 +37,23 @@ function showQuestion() {
     let questionNo = currentQuestionsIndex + 1;
     questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
     questionElement.style.display = 'block';
-    // Randomise the answers if the configuration is set to true
+
+    // Randomize the answers if the configuration is set to true
     if (uiconfig.randomise_answers) {
         currentQuestion.answers = currentQuestion.answers.sort(() => Math.random() - 0.5);
     }
-    currentQuestion.answers.forEach(answer => {
+
+    // Store scores for the current question in the object
+    questionScores[currentQuestionsIndex] = currentQuestion.answers.map(answer => answer.score);
+
+    currentQuestion.answers.forEach((answer, index) => {
         const button = document.createElement("button");
         button.innerHTML = answer.text;
         button.classList.add("btn");
         answerButton.appendChild(button);
-        button.dataset.score = answer.score;
-        button.addEventListener("click", selectAnswer)
+
+        // Add an event listener to handle answer selection
+        button.addEventListener("click", () => selectAnswer(index));
     });
 
     nextButton.innerText = uiconfig[selectedLanguage].next_question_btn;
@@ -66,26 +73,32 @@ function resetState() {
     window.scrollTo({ top: 0 });
 }
 
-function selectAnswer(e) {
-    const selectedBtn = e.target
+function selectAnswer(answerIndex) {
+    const selectedScore = questionScores[currentQuestionsIndex][answerIndex];
+    const buttons = Array.from(answerButton.children);
+    const selectedBtn = buttons[answerIndex];
+
     if (uiconfig.highlight_correct_answer) {
-      if (selectedBtn.dataset.score.toLowerCase() === 'true') {
-        selectedBtn.classList.add("correct");
-        score++;        
-      } else {
-        selectedBtn.classList.add("incorrect");        
-      }
+        if (selectedScore.toString().toLowerCase() === 'true') {
+            selectedBtn.classList.add("correct");
+            score++;
+        } else {
+            selectedBtn.classList.add("incorrect");
+        }
     } else {
-      selectedBtn.classList.add("neutral");
-      score += Number(selectedBtn.dataset.score);
+        selectedBtn.classList.add("neutral");
+        score += Number(selectedScore);
     }
     selectedBtn.classList.add("chosen");
-    Array.from(answerButton.children).forEach(button => {
-      if (uiconfig.highlight_correct_answer && button.dataset.score.toLowerCase() === 'true') {
-        button.classList.add("correct");
-      }
-      button.disabled = true;
+
+    // Highlight correct answers if configured
+    buttons.forEach((button, index) => {
+        if (uiconfig.highlight_correct_answer && questionScores[currentQuestionsIndex][index].toString().toLowerCase() === 'true') {
+            button.classList.add("correct");
+        }
+        button.disabled = true;
     });
+
     nextButton.style.display = "block";
 }
 
