@@ -17,7 +17,7 @@ var score = 0;
 
 var questions = [];
 var localisations = {};
-const questionScores = {};
+var questionScores = {};
 
 function selectQuizLanguage()  {
     resetState();
@@ -26,9 +26,18 @@ function selectQuizLanguage()  {
 }
 
 async function startQuiz()  {
+    questionScores = encodeData({});
     currentQuestionsIndex = 0;
     score = 0;
     showQuestion();
+}
+
+function encodeData(data) {
+    return btoa(JSON.stringify(data));
+}
+
+function decodeData(data) {
+    return JSON.parse(atob(data));
 }
 
 function showQuestion() {
@@ -43,8 +52,10 @@ function showQuestion() {
         currentQuestion.answers = currentQuestion.answers.sort(() => Math.random() - 0.5);
     }
 
-    // Store scores for the current question in the object
+    // Store scores for the current question in the encoded JSON object
+    questionScores = decodeData(questionScores);
     questionScores[currentQuestionsIndex] = currentQuestion.answers.map(answer => answer.score);
+    questionScores = encodeData(questionScores);
 
     currentQuestion.answers.forEach((answer, index) => {
         const button = document.createElement("button");
@@ -74,7 +85,8 @@ function resetState() {
 }
 
 function selectAnswer(answerIndex) {
-    const selectedScore = questionScores[currentQuestionsIndex][answerIndex];
+    let decodedScores = decodeData(questionScores);
+    const selectedScore = decodedScores[currentQuestionsIndex][answerIndex];
     const buttons = Array.from(answerButton.children);
     const selectedBtn = buttons[answerIndex];
 
@@ -93,7 +105,7 @@ function selectAnswer(answerIndex) {
 
     // Highlight correct answers if configured
     buttons.forEach((button, index) => {
-        if (uiconfig.highlight_correct_answer && questionScores[currentQuestionsIndex][index].toString().toLowerCase() === 'true') {
+        if (uiconfig.highlight_correct_answer && decodedScores[currentQuestionsIndex][index].toString().toLowerCase() === 'true') {
             button.classList.add("correct");
         }
         button.disabled = true;
@@ -222,10 +234,6 @@ async function fetchData(endpoint) {
 // Initialize the quiz with the fetched localised data
 async function initializeQuiz(lang) {
   questions = await fetchData(`/api/questions/${lang}`);
-  // Randomise the questions if the configuration is set to true
-  if (uiconfig.randomise_questions) {
-      questions = questions.sort(() => Math.random() - 0.5);
-  }
   localisations = await fetchData(`/api/localisations/${lang}`);
   
   if (!questions || !localisations) {

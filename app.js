@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import redis from './src/redisClient.js';
+import { appconfig } from './appconfig.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,9 +27,29 @@ fastify.register(await import('@fastify/static'), {
 // API routes
 fastify.get('/api/questions/:lang', async (req, reply) => {
   const { lang } = req.params;
-  const questions = await redis.get(`questions:${lang}`);
-  if (!questions) return reply.status(404).send({ error: 'Questions not found' });
-  reply.send(JSON.parse(questions));
+  const questionsString = await redis.get(`questions:${lang}`);
+  
+  if (!questionsString) {
+    return reply.status(404).send({ error: 'Questions not found' });
+  }
+
+  // Parse the questions string into an array
+  let questions;
+  try {
+    questions = JSON.parse(questionsString);
+  } catch (error) {
+    return reply.status(500).send({ error: 'Failed to parse questions' });
+  }
+
+  // Randomize the questions if the configuration is set to true
+  if (appconfig.randomise_questions) {
+    questions = questions.sort(() => Math.random() - 0.5);
+  }
+
+  // Encode the questions to Base64 after ensuring UTF-8 encoding
+  const jsonString = JSON.stringify(questions);
+   
+  reply.send(jsonString);
 });
 
 fastify.get('/api/localisations/:lang', async (req, reply) => {

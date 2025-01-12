@@ -15,7 +15,6 @@ export const uiconfig = {
       quiz_description: "Опис тесту",
       final_result: "${score} з ${MAX_SCORE} балів"
     },
-    randomise_questions: true,
     randomise_answers: true,
     highlight_correct_answer: true,
     maxscore: {
