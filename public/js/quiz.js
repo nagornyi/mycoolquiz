@@ -21,7 +21,6 @@ var questionScores = {};
 
 function selectQuizLanguage()  {
     resetState();
-    quizName.innerText = "Quiz Language";
     languageForm.style.display = "block";
 }
 
@@ -44,7 +43,7 @@ function showQuestion() {
     resetState();
     let currentQuestion = questions[currentQuestionsIndex];
     let questionNo = currentQuestionsIndex + 1;
-    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+    questionElement.innerHTML =  `${questionNo} / ${questions.length}<br><br>${currentQuestion.question}`;
     questionElement.style.display = 'block';
 
     // Randomize the answers if the configuration is set to true
@@ -71,7 +70,9 @@ function showQuestion() {
 }
 
 function resetState() {
-    stopFireworks();
+    if (uiconfig.fireworks_on_result_screen) {
+        stopFireworks();
+    }
     appContainer.classList.remove("app-clear");
     appContainer.classList.add("app");
     languageForm.style.display = 'none';
@@ -171,7 +172,9 @@ function showScore() {
     quizInfo.innerHTML = final_msg;
     nextButton.innerHTML = uiconfig[selectedLanguage].quiz_restart_btn;
     nextButton.style.display = "block";
-    startFireworks();
+    if (uiconfig.fireworks_on_result_screen) {
+        startFireworks();
+    }
 }
 
 // Handle language selection
