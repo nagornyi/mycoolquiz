@@ -1,334 +1,185 @@
 export const questions = {
-  en: [
+  uk: [
     {
-      question: `<p>I was angry with my friend;<br>
-                  I told my wrath, my wrath did end.</p><br>
-                  I was angry with my foe:<br>
-                  I told it not, my wrath did grow.</p><br>
-
-                  <p>And I waterd it in fears,<br>
-                  Night & morning with my tears:<br>
-                  And I sunned it with smiles,<br>
-                  And with soft deceitful wiles.</p><br>
-
-                  <p>And it grew both day and night.<br>
-                  Till it bore an apple bright.<br>
-                  And my foe beheld it shine,<br>
-                  And he knew that it was mine.</p><br>
-
-                  <p>And into my garden stole,<br>
-                  When the night had veild the pole;<br>
-                  In the morning glad I see;<br>
-                  My foe outstretched beneath the tree.</p>`,
+      question: `Яку квітку шукають в Купальську ніч?`,
       answers: [
-        { text: "William Wordsworth", score: false },
-        { text: "William Blake", score: true },
-        { text: "Percy Bysshe Shelley", score: false }
+        { text: "Цвіт сакури", score: false },
+        { text: "Цвіт незабудки", score: false },
+        { text: "Цвіт папороті", score: true },
+        { text: "Цвіт калини", score: false }
       ]
     },
     {
-      question: `It keeps eternal whisperings around<br>
-                Desolate shores, and with its mighty swell<br>
-                Gluts twice ten thousand caverns, till the spell<br>
-                Of Hecate leaves them their old shadowy sound.<br>
-                Often 'tis in such gentle temper found,<br>
-                That scarcely will the very smallest shell<br>
-                Be moved for days from whence it sometime fell,<br>
-                When last the winds of heaven were unbound.<br>
-                Oh ye! who have your eye-balls vexed and tired,<br>
-                Feast them upon the wideness of the Sea;<br>
-                Oh ye! whose ears are dinned with uproar rude,<br>
-                Or fed too much with cloying melody,—<br>
-                Sit ye near some old cavern's mouth, and brood<br>
-                Until ye start, as if the sea-nymphs choired!`,
+      question: `З чим пов'язані традиції купальського свята?`,
       answers: [
-        { text: "John Keats", score: true },
-        { text: "Lord Byron", score: false },
-        { text: "John Milton", score: false }
+        { text: "З коханням", score: true },
+        { text: "Зі збором урожаю", score: false },
+        { text: "З лісовими пожежами", score: false },
+        { text: "Із завершенням навчального року", score: false }
       ]
     },
     {
-      question: `<p>As the Liberty lads o’er the sea<br>
-                  Bought their freedom, and cheaply, with blood,<br>
-                  So we, boys, we<br>
-                  Will die fighting, or live free,<br>
-                  And down with all kings but King Ludd!</p><br>
-
-                  <p>When the web that we weave is complete,<br>
-                  And the shuttle exchanged for the sword,<br>
-                  We will fling the winding sheet<br>
-                  O’er the despot at our feet,<br>
-                  And dye it deep in the gore he has pour’d.</p><br>
-
-                  <p>Though black as his heart its hue,<br>
-                  Since his veins are corrupted to mud,<br>
-                  Yet this is the dew<br>
-                  Which the tree shall renew<br>
-                  Of Liberty, planted by Ludd!</p>`,
+      question: `Яка з традицій свята Купала пов'язана з водою?`,
       answers: [
-        { text: "Lord Byron", score: true },
-        { text: "William Shakespeare", score: false },
-        { text: "Percy Bysshe Shelley", score: false }
+        { text: "Кидання камінців у воду", score: false },
+        { text: "Риболовля", score: false },
+        { text: "Миття рук у річці", score: false },
+        { text: "Масові купання та обливання водою", score: true }
       ]
     },
     {
-      question: `<p>When icicles hang by the wall<br>
-                And Dick the shepherd blows his nail<br>
-                And Tom bears logs into the hall,<br>
-                And milk comes frozen home in pail,<br>
-                When Blood is nipped and ways be foul,<br>
-                Then nightly sings the staring owl,<br>
-                Tu-who;<br>
-                Tu-whit, tu-who: a merry note,<br>
-                While greasy Joan doth keel the pot.</p><br>
-
-                <p>When all aloud the wind doth blow,<br>
-                And coughing drowns the parson's saw,<br>
-                And birds sit brooding in the snow,<br>
-                And Marian's nose looks red and raw<br>
-                When roasted crabs hiss in the bowl,<br>
-                Then nightly sings the staring owl,<br>
-                Tu-who;<br>
-                Tu-whit, tu-who: a merry note,<br>
-                While greasy Joan doth keel the pot.</p>`,
-      answers: [        
-        { text: "William Wordsworth", score: false },
-        { text: "Percy Bysshe Shelley", score: false },
-        { text: "William Shakespeare", score: true }
-      ]
-    },
-    {
-      question: `When I consider how my light is spent<br>
-                Ere half my days in this dark world and wide,<br>
-                And that one talent which is death to hide<br>
-                Lodg’d with me useless, though my soul more bent<br>
-                To serve therewith my Maker, and present<br>
-                My true account, lest he returning chide,<br>
-                “Doth God exact day-labour, light denied?”<br>
-                I fondly ask. But Patience, to prevent<br>
-                That murmur, soon replies: “God doth not need<br>
-                Either man’s work or his own gifts: who best<br>
-                Bear his mild yoke, they serve him best. His state<br>
-                Is kingly; thousands at his bidding speed<br>
-                And post o’er land and ocean without rest:<br>
-                They also serve who only stand and wait.”`,
-      answers: [        
-        { text: "William Wordsworth", score: false },
-        { text: "John Milton", score: true },
-        { text: "Percy Bysshe Shelley", score: false }
-      ]
-    },
-    {
-      question: `<p>I wandered lonely as a cloud<br>
-                That floats on high o’er vales and hills,<br>
-                When all at once I saw a crowd,<br>
-                A host, of golden daffodils;<br>
-                Beside the lake, beneath the trees,<br>
-                Fluttering and dancing in the breeze.</p><br>
-
-                <p>Continuous as the stars that shine<br>
-                And twinkle on the milky way,<br>
-                They stretched in never-ending line<br>
-                Along the margin of a bay:<br>
-                Ten thousand saw I at a glance,<br>
-                Tossing their heads in sprightly dance.</p><br>
-
-                <p>The waves beside them danced; but they<br>
-                Out-did the sparkling waves in glee:<br>
-                A poet could not but be gay,<br>
-                In such a jocund company:<br>
-                I gazed—and gazed—but little thought<br>
-                What wealth the show to me had brought:</p><br>
-
-                <p>For oft, when on my couch I lie<br>
-                In vacant or in pensive mood,<br>
-                They flash upon that inward eye<br>
-                Which is the bliss of solitude;<br>
-                And then my heart with pleasure fills,<br>
-                And dances with the daffodils.</p>`,
+      question: `Що дівчата пускають на воду в купальську ніч, щоб дізнатися свою долю?`,
       answers: [
-        { text: "William Wordsworth", score: true },
-        { text: "William Blake", score: false },
-        { text: "Percy Bysshe Shelley", score: false }
+        { text: "Фрукти", score: false },
+        { text: "Камінці", score: false },
+        { text: "Вінки з квітів", score: true },
+        { text: "Монети", score: false }
       ]
     },
     {
-      question: `I met a traveler from an antique land<br>
-                Who said: “Two vast and trunkless legs of stone<br>
-                Stand in the desert . . . Near them, on the sand,<br>
-                Half sunk, a shattered visage lies, whose frown,<br>
-                And wrinkled lip, and sneer of cold command,<br>
-                Tell that its sculptor well those passions read<br>
-                Which yet survive, stamped on these lifeless things,<br>
-                The hand that mocked them, and the heart that fed:<br>
-                And on the pedestal these words appear:<br>
-                ‘My name is Ozymandias, king of kings:<br>
-                Look on my works, ye Mighty, and despair!’<br>
-                Nothing beside remains. Round the decay<br>
-                Of that colossal wreck, boundless and bare<br>
-                The lone and level sands stretch far away.”`,
+      question: `Який елемент є обов'язковим атрибутом Купальської ночі, через який стрибають?`,
       answers: [
-        { text: "John Keats", score: false },
-        { text: "Lord Byron", score: false },
-        { text: "Percy Bysshe Shelley", score: true }
+        { text: "Струмок", score: false },
+        { text: "Багаття", score: true },
+        { text: "Паркан", score: false },
+        { text: "Камінь", score: false }
+      ]
+    },
+    {
+      question: `Який персонаж української міфології пов'язаний зі святом Івана Купала?`,
+      answers: [
+        { text: "Домовик", score: false },
+        { text: "Лісовик", score: false },
+        { text: "Мавка (або русалка)", score: true },
+        { text: "Водяник", score: false }
+      ]
+    },
+    {
+      question: `Для чого молоді пари стрибають через Купальське багаття?`,
+      answers: [
+        { text: "Щоб загадати бажання", score: false },
+        { text: "Просять пробачення", score: false },
+        { text: "Тримаються за руки, щоб зміцнити любов", score: true },
+        { text: "Змагаються, хто вище стрибне", score: false }
+      ]
+    },
+    {
+      question: `Яке основне значення має танець "Хоровод" на святі Івана Купала?`,
+      answers: [
+        { text: "Викликання духів предків", score: false },
+        { text: "Змагання на витривалість", score: false },
+        { text: "Єднання та поклоніння сонцю", score: true },
+        { text: "Спосіб продемонструвати індивідуальну майстерність", score: false }
+      ]
+    },
+    {
+      question: `Яка річ, згідно з народними повір'ями, допомагає знайти закоханим щастя, якщо її знайти в Купальську ніч?`,
+      answers: [
+        { text: "Золотий ключ", score: false },
+        { text: "Квітка папороті", score: true },
+        { text: "Срібна монета", score: false },
+        { text: "Бурштин", score: false }
+      ]
+    },
+    {
+      question: `Як ще по іншому називають свято Івана Купала?`,
+      answers: [
+        { text: "Свято літнього сонцестояння", score: true },
+        { text: "Великдень", score: false },
+        { text: "Різдво", score: false },
+        { text: "Масниця", score: false }
       ]
     }
   ],
-  uk: [
+  jp: [
     {
-      question: `<p>Овес росте край неба у пісках,<br>
-                Мов сивий дід, над ним куняє хмара.<br>
-                Похмурий сон: на головах<br>
-                Стоять століття і бездумно марять.<br>
-                — Росте овес, киває і мовчить.</p><br>
-
-                <p>Далеко в морі хилять кораблі<br>
-                Латинський парус у вечірній ірій.<br>
-                — Овес росте і виростає в ліс,<br>
-                Стовпи страшні змертвілі й сірі:<br>
-                Гниють і з крахом падають на шлях…</p><br>
-                <p>— Росте овес край неба у пісках.</p>`,
+      question: `クパーラ祭の夜に探す花は何ですか？`,
       answers: [
-        { text: "Євген Плужник", score: false },
-        { text: "Майк Йогансен", score: true },
-        { text: "Михайль Семенко", score: false }
+        { text: "桜の花", score: false },
+        { text: "ワスレナグサ", score: false },
+        { text: "シダの花", score: true },
+        { text: "カリーナの花", score: false }
       ]
     },
     {
-      question: `<p>Гарячий день — і враз достигне жито,<br>
-                І доп’яніють обважнілі грона.<br>
-                Він ще незнаний, ще непережитий,<br>
-                Єдиний день — мого життя корона.</p><br>
-
-                <p>І що це буде — зустріч, чин, екстаза?<br>
-                Чи дотик смерти на одну хвилину?<br>
-                Душа дозріє, сповниться відразу<br>
-                Подвійним смаком — меду і полину.</p><br>
-
-                <p>А дивне серце, п’яне і завзяте,<br>
-                Відчує певність, мов нехибну шпаду:<br>
-                Мій день єдиний! Неповторне свято!<br>
-                Найвищий шпиль — і початок до спаду.</p>`,
+      question: `クパーラ祭の伝統は何と関連していますか？`,
       answers: [
-        { text: "Микола Зеров", score: false },
-        { text: "Богдан-Ігор Антонич", score: false },
-        { text: "Олена Теліга", score: true }
+        { text: "愛", score: true },
+        { text: "収穫", score: false },
+        { text: "森林火災", score: false },
+        { text: "学年末の終了", score: false }
       ]
     },
     {
-      question: `<p>Дві паралелі, два меридіяни —<br>
-                І от квадрат. Живи! Твори! Вмирай!<br>
-                Тут тверді тінь. Тут, трепетний і тьмяний<br>
-                Замкнувся світ. Тут — Тигр, Єфрат і Рай.</p><br>
-
-                <p>Настане час, — і ти обрящеш Єву…<br>
-                Час промине, — і мир утратиш ти…<br>
-                І переступиш грань (уявну чи чуттєву)<br>
-                Якоїсь довготи чи широти.</p><br>
-
-                <p>І буде знову: два меридіяни,<br>
-                Дві паралелі — квадратовий рай.<br>
-                І тверді тінь… І трепетний і тьмяний<br>
-                Безсмертний світ… Живи! Твори! Вмирай!</p>`,
+      question: `クパーラ祭で水と関係のある伝統は何ですか？`,
       answers: [
-        { text: "Євген Плужник", score: true },
-        { text: "Михайль Семенко", score: false },
-        { text: "Валер'ян Поліщук", score: false }
+        { text: "石を水に投げる", score: false },
+        { text: "魚釣り", score: false },
+        { text: "川で手を洗う", score: false },
+        { text: "集団での水浴びや水をかけあうこと", score: true }
       ]
     },
     {
-      question: `<p>Я палаю захватом, я чекаю вечора<br>
-                Я мрію про щастя я мріяв і вчора<br>
-                Я лину до тропіків я багну холодного глетчера<br>
-                Я хочу прилащитись до зимного моря</p><br>
-
-                <p>Хочу буть диким як вітер над скелями<br>
-                Хочу буть скелею щоб серця граніт<br>
-                Розбився об серце, що пахне морелями<br>
-                Блукає в душі де кохання і лід</p><br>
-
-                <p>Співаю про захвати щастя безстумного<br>
-                Щастя безмежного в місті над бухтою<br>
-                Чекаю я вечора хмарно-роздумного<br>
-                Зустрінутись з нею, квапливо-безрухою.</p>`,
+      question: `運命を知るために、少女たちがクパーラ祭の夜に水に流すものは何ですか？`,
       answers: [
-        { text: "Майк Йогансен", score: false },
-        { text: "Михайль Семенко", score: true },
-        { text: "Олена Теліга", score: false }
+        { text: "果物", score: false },
+        { text: "小石", score: false },
+        { text: "フラワーリース（花冠）", score: true },
+        { text: "硬貨", score: false }
       ]
     },
     {
-      question: `<p>Підводяться, мов сонні, велетенські леви, силюети<br>
-                тяжких, прирослих до землі, кам’яностопих тюрем<br>
-                і в’язнів по ночах відвідують коханки і комети,<br>
-                і місяць, мов рудий павук, повзе поволі муром.</p><br>
-
-                <p>Коли слова на порох стерті, сповідатись зорям зайво.<br>
-                На зорях, мов на стінах, цвіль, черва,<br>
-                зелінка й вогкість<br>
-                Обличчя в’язнів миє місяць синім і холодним сяйвом<br>
-                аж обростуть за ніч, мов круглі пні, кошлатим мохом!</p><br>
-
-                <p>Підземних рік слизьке, примарне зілля,<br>
-                мокрі зорі й змії,<br>
-                долини місяця оброслі горіховим гаєм.<br>
-                Сто днів і сто ночей ідуть руді дощі і вітер віє,<br>
-                вода підноситься і зорі й тюрми заливає.</p><br>
-
-                <p>Де не оставсь на каменю ні камень, де зрівнялись гори<br>
-                знов мулярі нову тюрму будують з брил<br>
-                квітчастих.<br>
-                Цвіте під шибеницями багряне квіття мандрагори,<br>
-                і мотуз вішальників для живих приносить щастя.</p>`,
+      question: `クパーラ祭の夜に飛び越える、欠かせない要素は何ですか？`,
       answers: [
-        { text: "Євген Плужник", score: false },
-        { text: "Микола Зеров", score: false },
-        { text: "Богдан-Ігор Антонич", score: true }
+        { text: "小川", score: false },
+        { text: "かがり火（たき火）", score: true },
+        { text: "フェンス", score: false },
+        { text: "石", score: false }
       ]
     },
     {
-      question: `Далека сестро по природі,<br>
-                Медузо млявих коливань!<br>
-                Твоя жива, холодна ткань —<br>
-                Рощина перша животворчих соків.<br>
-                Як перший гомін рефлекторних рухів,<br>
-                Ти тихо в заводі пливеш.<br>
-                Ти перший сон глибокого хотіння<br>
-                Рухомих сил, енергії землі.<br>
-                Проходиш в лоні світовому,<br>
-                Сама породження його.<br>
-                Які ускладнення рефлексів наростають<br>
-                На той первісний життєдайний ґрунт,<br>
-                Щоб аж піднятись до етеру мислів,<br>
-                До гострих смаків почувань!`,
+      question: `ウクライナ神話でイワン・クパーラ祭と関連のある登場人物は誰ですか？`,
       answers: [
-        { text: "Майк Йогансен", score: false },
-        { text: "Олена Теліга", score: false },
-        { text: "Валер'ян Поліщук", score: true }
+        { text: "ドモヴィーク（家霊）", score: false },
+        { text: "レーソヴィーク（森の精）", score: false },
+        { text: "マーウカ（水の精、またはルサルカ）", score: true },
+        { text: "ヴォジャヌィーク（水神）", score: false }
       ]
     },
     {
-      question: `<p>Хоч як звели тебе гермокопіди<br>
-                І несмак архітекторів-нездар,<br>
-                І всюди прослід залишив пожар,—<br>
-                Ти все стоїш, веселий, ясновидий</p><br>
-
-                <p>І недаремно вихваляють гіди<br>
-                Красу твою, твій найдорожчий дар<br>
-                Синіють води, зеленіє яр,<br>
-                І стелються сліпучі краєвиди.</p><br>
-
-                <p>А вулиці твої виводить зір<br>
-                В повітря чисте. В запашний простір,<br>
-                Де ходить вітер горовий і п’яний</p><br>
-
-                <p>І в тихий час, як западає ніч,<br>
-                Поважно гомонять старі каштани<br>
-                І в небо зносять міріади свіч.</p>`,
-      answers: [        
-        { text: "Микола Зеров", score: true },
-        { text: "Михайль Семенко", score: false },
-        { text: "Євген Плужник", score: false }
+      question: `若いカップルがクパーラ祭のかがり火を飛び越えるのはなぜですか？`,
+      answers: [
+        { text: "願い事をするため", score: false },
+        { text: "許しを請うため", score: false },
+        { text: "手をつなぎ、愛を強固にするため", score: true },
+        { text: "どちらが高く跳べるか競争するため", score: false }
+      ]
+    },
+    {
+      question: `イワン・クパーラ祭における「ホロヴォード」（円舞）の主な意味は何ですか？`,
+      answers: [
+        { text: "先祖の霊を呼び出す", score: false },
+        { text: "持久力を競う", score: false },
+        { text: "団結と太陽崇拝", score: true },
+        { text: "個人の技術を披露する", score: false }
+      ]
+    },
+    {
+      question: `民間の言い伝えによると、クパーラ祭の夜に見つけると恋人たちに幸せをもたらすものは何ですか？`,
+      answers: [
+        { text: "金の鍵", score: false },
+        { text: "シダの花", score: true },
+        { text: "銀貨", score: false },
+        { text: "琥珀", score: false }
+      ]
+    },
+    {
+      question: `イワン・クパーラ祭の別名は何ですか？`,
+      answers: [
+        { text: "夏至祭", score: true },
+        { text: "復活祭", score: false },
+        { text: "クリスマス", score: false },
+        { text: "マースヌィツャ（謝肉祭）", score: false }
       ]
     }
   ]

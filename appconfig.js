@@ -1,8 +1,8 @@
 export const appconfig = {
-    quiz_title: "Poetry Quiz",
+    quiz_title: "Kupala Quiz",
     quiz_languages: [
-        {code: "en", name: "English"},
-        {code: "uk", name: "Українська"}
+        {code: "uk", name: "Українська"},
+        {code: "jp", name: "日本語"}
     ],
     randomise_questions: true
 };

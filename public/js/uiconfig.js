@@ -1,12 +1,4 @@
 export const uiconfig = {
-    en: {
-      quiz_start_btn: "Start the quiz",
-      next_question_btn: "Next",
-      quiz_restart_btn: "Restart the quiz",
-      number_of_questions: "Number of questions in the quiz",
-      quiz_description: "Quiz description",
-      final_result: "${score} out of ${MAX_SCORE} points"
-    },
     uk: {
       quiz_start_btn: "Почати тест",
       next_question_btn: "Далі",
@@ -14,6 +6,14 @@ export const uiconfig = {
       number_of_questions: "Кількість питань у тесті",
       quiz_description: "Опис тесту",
       final_result: "${score} з ${MAX_SCORE} балів"
+    },
+    jp: {
+      quiz_start_btn: "テストを開始",
+      next_question_btn: "次の質問",
+      quiz_restart_btn: "もう一度試す",
+      number_of_questions: "テストの質問数",
+      quiz_description: "テストの説明",
+      final_result: "${score} / ${MAX_SCORE} 点"
     },
     randomise_answers: true,
     highlight_correct_answer: true,

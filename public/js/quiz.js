@@ -11,7 +11,7 @@ const answerButton = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 
 // Default language
-var selectedLanguage = 'en';
+var selectedLanguage = 'uk';
 var currentQuestionsIndex = 0;
 var score = 0;
 
