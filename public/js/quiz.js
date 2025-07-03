@@ -82,7 +82,7 @@ function resetState() {
   while (answerButton.firstChild) {
     answerButton.removeChild(answerButton.firstChild);
   }
-  window.scrollTo({ top: 0 });
+  setTimeout(() => window.scrollTo({ top: 0 }), 0);
 }
 
 // Select answer and mark it
