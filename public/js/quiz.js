@@ -85,34 +85,42 @@ function resetState() {
     window.scrollTo({ top: 0 });
 }
 
+// Select answer and mark it
 function selectAnswer(answerIndex) {
-    let decodedScores = decodeData(questionScores);
-    const selectedScore = decodedScores[currentQuestionsIndex][answerIndex];
-    const buttons = Array.from(answerButton.children);
-    const selectedBtn = buttons[answerIndex];
+  let decodedScores = decodeData(questionScores);
+  const selectedScore = decodedScores[currentQuestionsIndex][answerIndex];
+  const buttons = Array.from(answerButton.children);
+  const selectedBtn = buttons[answerIndex];
 
-    if (uiconfig.highlight_correct_answer) {
-        if (selectedScore.toString().toLowerCase() === 'true') {
-            selectedBtn.classList.add("correct");
-            score++;
-        } else {
-            selectedBtn.classList.add("incorrect");
-        }
+  if (uiconfig.highlight_correct_answer) {
+    if (selectedScore.toString().toLowerCase() === 'true') {
+      selectedBtn.classList.add("correct");
+      score++;
     } else {
-        selectedBtn.classList.add("neutral");
-        score += Number(selectedScore);
+      selectedBtn.classList.add("incorrect");
     }
-    selectedBtn.classList.add("chosen");
+  } else {
+    selectedBtn.classList.add("neutral");
+    score += Number(selectedScore);
+  }
+  selectedBtn.classList.add("chosen");
 
-    // Highlight correct answers if configured
+  // Disable all buttons first (minimal layout shift)
+  buttons.forEach(button => button.disabled = true);
+
+  // Apply visual styles in one frame to batch paint
+  requestAnimationFrame(() => {
     buttons.forEach((button, index) => {
-        if (uiconfig.highlight_correct_answer && decodedScores[currentQuestionsIndex][index].toString().toLowerCase() === 'true') {
-            button.classList.add("correct");
-        }
-        button.disabled = true;
+      if (
+        uiconfig.highlight_correct_answer &&
+        decodedScores[currentQuestionsIndex][index].toString().toLowerCase() === 'true'
+      ) {
+        button.classList.add("correct");
+      }
     });
+  });
 
-    nextButton.style.display = "block";
+  nextButton.style.display = "block";
 }
 
 function showScore() {

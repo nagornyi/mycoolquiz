@@ -206,6 +206,7 @@ a:focus, a:active, a:visited {
 .chosen {  
   transition: transform 0.2s ease-in-out, background 0.3s ease;
   animation: bounce 1s infinite;
+  will-change: transform;
 }
 
 .neutral {
@@ -291,5 +292,21 @@ canvas#fireworks {
   #next-btn {
       width: 100%;
       padding: 15px;
+  }
+  .chosen.correct,
+  .chosen.incorrect,
+  .chosen.neutral {
+    box-shadow: none !important;
+  }
+  .chosen {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  button, .btn, .lang-btn, #next-btn {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:focus, .btn:focus {
+    outline: none;
   }
 }

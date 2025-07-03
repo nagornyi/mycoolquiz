@@ -4,7 +4,7 @@ A simple quiz application that is implemented using the Fastify web framework. O
 
 ## Add localised questions to your quiz
 
-You can create your own custom quiz by changing the data in the database seed files `seed/questions.js` and `seed/localisations.js`, then run `npm run seed` to update the database and restart the app. Use HTML markup to insert page breaks and paragraphs for long questions. You can change the quiz title in the `public/js/appconfig.js` configuration file. As it comes before the language selection of the quiz, this title is not localised.
+You can create your own custom quiz by changing the data in the database seed files `seed/questions.js` and `seed/localisations.js`, then run `npm run seed` to update the database and restart the app. Use HTML markup to insert page breaks and paragraphs for long questions. You can change the quiz title in the `appconfig.js` configuration file. As it comes before the language selection of the quiz, this title is not localised.
 
 ## Scoring system and points
 
@@ -14,7 +14,7 @@ The score range is divided into three equal segments using (MAX_SCORE - MIN_SCOR
 
 ## Other options
 
-Questions are displayed in randomised order if the `randomise_questions` option in the `public/js/appconfig.js` configuration file is set to true. Answers are displayed in randomised order if the `randomise_answers` option in the `public/js/uiconfig.js` configuration file is set to true.
+Questions are displayed in randomised order if the `randomise_questions` option in the `appconfig.js` configuration file is set to true. Answers are displayed in randomised order if the `randomise_answers` option in the `public/js/uiconfig.js` configuration file is set to true.
 
 You can enable or disable the fireworks animation on the result screen by changing the `fireworks_on_result_screen` option in the `public/js/uiconfig.js` configuration file.
 
@@ -22,7 +22,7 @@ You can enable or disable the fireworks animation on the result screen by changi
 
 Two languages are currently supported - English and Ukrainian, but you can add as many languages as you like. Don't forget to add localisations and questions for each language.
 
-If you want to add more languages, you can add them to the `quiz_languages` array in the `public/js/appconfig.js` configuration file:
+If you want to add more languages, you can add them to the `quiz_languages` array in the `appconfig.js` configuration file:
 
 ```js
 quiz_languages: [
