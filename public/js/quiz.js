@@ -70,19 +70,19 @@ function showQuestion() {
 }
 
 function resetState() {
-    if (uiconfig.fireworks_on_result_screen) {
-        stopFireworks();
-    }
-    appContainer.classList.remove("app-clear");
-    appContainer.classList.add("app");
-    languageForm.style.display = 'none';
-    nextButton.style.display = 'none'
-    quizInfo.style.display = 'none'
-    while(answerButton.firstChild){
-        answerButton.removeChild(answerButton.firstChild);
-    }
-    // Scroll to the top of the page
-    window.scrollTo({ top: 0 });
+  if (uiconfig.fireworks_on_result_screen) {
+    stopFireworks();
+  }
+  appContainer.classList.remove("app-clear");
+  appContainer.classList.add("app");
+  languageForm.style.display = 'none';
+  nextButton.style.display = 'none';
+  quizInfo.style.display = 'none';
+  answerButton.classList.remove('answer-revealed');
+  while (answerButton.firstChild) {
+    answerButton.removeChild(answerButton.firstChild);
+  }
+  window.scrollTo({ top: 0 });
 }
 
 // Select answer and mark it
@@ -92,6 +92,13 @@ function selectAnswer(answerIndex) {
   const buttons = Array.from(answerButton.children);
   const selectedBtn = buttons[answerIndex];
 
+  // Disable all buttons
+  buttons.forEach(button => button.disabled = true);
+
+  // Mark the selected button
+  selectedBtn.classList.add("chosen");
+
+  // Update score
   if (uiconfig.highlight_correct_answer) {
     if (selectedScore.toString().toLowerCase() === 'true') {
       selectedBtn.classList.add("correct");
@@ -99,26 +106,20 @@ function selectAnswer(answerIndex) {
     } else {
       selectedBtn.classList.add("incorrect");
     }
+
+    // Mark all correct answers (only class names, no DOM redraw)
+    buttons.forEach((button, index) => {
+      if (decodedScores[currentQuestionsIndex][index].toString().toLowerCase() === 'true') {
+        button.classList.add("correct");
+      }
+    });
   } else {
     selectedBtn.classList.add("neutral");
     score += Number(selectedScore);
   }
-  selectedBtn.classList.add("chosen");
 
-  // Disable all buttons first (minimal layout shift)
-  buttons.forEach(button => button.disabled = true);
-
-  // Apply visual styles in one frame to batch paint
-  requestAnimationFrame(() => {
-    buttons.forEach((button, index) => {
-      if (
-        uiconfig.highlight_correct_answer &&
-        decodedScores[currentQuestionsIndex][index].toString().toLowerCase() === 'true'
-      ) {
-        button.classList.add("correct");
-      }
-    });
-  });
+  // Trigger CSS cascade with one class on the parent
+  answerButton.classList.add("answer-revealed");
 
   nextButton.style.display = "block";
 }

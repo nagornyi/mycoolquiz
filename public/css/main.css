@@ -203,38 +203,41 @@ a:focus, a:active, a:visited {
   }
 }
 
-.chosen {  
+.btn.chosen {  
   transition: transform 0.2s ease-in-out, background 0.3s ease;
   animation: bounce 1s infinite;
   will-change: transform;
 }
 
-.neutral {
+.answer-revealed .btn.neutral {
   background: #FF69B4;
-  color: #FFFFFF;
+  color: white;
 }
 
-.chosen.neutral {
+/* Neutral fallback */
+.answer-revealed .btn.chosen.neutral {
   border: 2px solid #FF1493;
   box-shadow: 0 0 20px rgba(255, 20, 147, 0.8);
 }
 
-.correct {
+/* Correct answer background for any correct button */
+.answer-revealed .btn.correct {
   background: green;
-  color: #FFFFFF;
+  color: white;
 }
 
-.chosen.correct {
+.answer-revealed .btn.chosen.correct {
   border: 2px solid #00FF00;
   box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
 }
 
-.incorrect {
+/* Incorrect answer background for any incorrect button */
+.answer-revealed .btn.incorrect {
   background: #B22222;
-  color: #FFFFFF;
+  color: white;
 }
 
-.chosen.incorrect {
+.answer-revealed .btn.chosen.incorrect {
   border: 2px solid #FF0000;
   box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
 }
