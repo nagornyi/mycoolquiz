@@ -5,6 +5,12 @@
   box-sizing: border-box;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 body {
   background: #121212;
   color: #E0E0E0;
@@ -15,19 +21,23 @@ body {
   background: #1E1E1E;
   width: 90%;
   max-width: 700px;
-  margin: 30px auto;
-  border-radius: 10px;
+  margin-inline: auto;
+  margin-block: 30px;
+  border-radius: 12px;
   padding: 25px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
+  scroll-behavior: smooth;
 }
 
 .app-clear {
   background: none;
   width: 90%;
   max-width: 700px;
-  margin: 30px auto;
+  margin-inline: auto;
+  margin-block: 30px;
   padding: 25px;
   box-shadow: none;
+  scroll-behavior: smooth;
 }
 
 .app h1, .app-clear h1 {
@@ -80,7 +90,7 @@ a:focus, a:active, a:visited {
   text-align: left;
   border-radius: 64px;
   cursor: pointer;
-  transition: all 0.3s; 
+  transition: all 0.3s;
 }
 
 .btn:hover:not([disabled]) {
@@ -115,7 +125,7 @@ a:focus, a:active, a:visited {
   border: none;
   padding: 15px 25px;
   font-size: 18px;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-align: center;
@@ -154,7 +164,7 @@ a:focus, a:active, a:visited {
   border: none;
   padding: 15px;
   margin-bottom: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 18px;
   text-align: center;
@@ -181,7 +191,7 @@ a:focus, a:active, a:visited {
   border: none;
   padding: 15px;
   margin-top: 25px;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 18px;
   text-align: center;
@@ -203,54 +213,57 @@ a:focus, a:active, a:visited {
   }
 }
 
-.chosen {  
+.btn.chosen {  
   transition: transform 0.2s ease-in-out, background 0.3s ease;
   animation: bounce 1s infinite;
 }
 
-.neutral {
+.answer-revealed .btn.neutral {
   background: #FF69B4;
-  color: #FFFFFF;
+  color: white;
 }
 
-.chosen.neutral {
+/* Neutral fallback */
+.answer-revealed .btn.chosen.neutral {
   border: 2px solid #FF1493;
   box-shadow: 0 0 20px rgba(255, 20, 147, 0.8);
 }
 
-.correct {
+/* Correct answer background for any correct button */
+.answer-revealed .btn.correct {
   background: green;
-  color: #FFFFFF;
+  color: white;
 }
 
-.chosen.correct {
+.answer-revealed .btn.chosen.correct {
   border: 2px solid #00FF00;
   box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
 }
 
-.incorrect {
+/* Incorrect answer background for any incorrect button */
+.answer-revealed .btn.incorrect {
   background: #B22222;
-  color: #FFFFFF;
+  color: white;
 }
 
-.chosen.incorrect {
+.answer-revealed .btn.chosen.incorrect {
   border: 2px solid #FF0000;
   box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
 }
 
 .framed-text {
   border: 5px solid;
-  padding: 20px;
+  padding: 10px;
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   margin-bottom: 20px;
   text-align: left;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .framed-result {
   border: 5px solid;
-  padding: 20px;
+  padding: 10px;
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   margin-bottom: 20px;
@@ -286,10 +299,30 @@ canvas#fireworks {
   }
   .btn {
       font-size: 18px;
-      padding: 10px;
+      padding: 15px;
   }
   #next-btn {
       width: 100%;
       padding: 15px;
+  }
+  .chosen,
+  .btn.chosen,
+  .btn.correct,
+  .btn.incorrect,
+  .btn.neutral {
+    animation: none !important;
+    transform: none !important;
+  }
+  button, .btn, .lang-btn, #next-btn {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:focus, .btn:focus {
+    outline: none;
+  }
+}
+
+@media (min-width: 601px) {
+  .chosen {
+    will-change: transform;
   }
 }

@@ -70,49 +70,58 @@ function showQuestion() {
 }
 
 function resetState() {
-    if (uiconfig.fireworks_on_result_screen) {
-        stopFireworks();
-    }
-    appContainer.classList.remove("app-clear");
-    appContainer.classList.add("app");
-    languageForm.style.display = 'none';
-    nextButton.style.display = 'none'
-    quizInfo.style.display = 'none'
-    while(answerButton.firstChild){
-        answerButton.removeChild(answerButton.firstChild);
-    }
-    // Scroll to the top of the page
-    window.scrollTo({ top: 0 });
+  if (uiconfig.fireworks_on_result_screen) {
+    stopFireworks();
+  }
+  appContainer.classList.remove("app-clear");
+  appContainer.classList.add("app");
+  languageForm.style.display = 'none';
+  nextButton.style.display = 'none';
+  quizInfo.style.display = 'none';
+  answerButton.classList.remove('answer-revealed');
+  while (answerButton.firstChild) {
+    answerButton.removeChild(answerButton.firstChild);
+  }
+  setTimeout(() => window.scrollTo({ top: 0 }), 0);
 }
 
+// Select answer and mark it
 function selectAnswer(answerIndex) {
-    let decodedScores = decodeData(questionScores);
-    const selectedScore = decodedScores[currentQuestionsIndex][answerIndex];
-    const buttons = Array.from(answerButton.children);
-    const selectedBtn = buttons[answerIndex];
+  let decodedScores = decodeData(questionScores);
+  const selectedScore = decodedScores[currentQuestionsIndex][answerIndex];
+  const buttons = Array.from(answerButton.children);
+  const selectedBtn = buttons[answerIndex];
 
-    if (uiconfig.highlight_correct_answer) {
-        if (selectedScore.toString().toLowerCase() === 'true') {
-            selectedBtn.classList.add("correct");
-            score++;
-        } else {
-            selectedBtn.classList.add("incorrect");
-        }
+  // Disable all buttons
+  buttons.forEach(button => button.disabled = true);
+
+  // Mark the selected button
+  selectedBtn.classList.add("chosen");
+
+  // Update score
+  if (uiconfig.highlight_correct_answer) {
+    if (selectedScore.toString().toLowerCase() === 'true') {
+      selectedBtn.classList.add("correct");
+      score++;
     } else {
-        selectedBtn.classList.add("neutral");
-        score += Number(selectedScore);
+      selectedBtn.classList.add("incorrect");
     }
-    selectedBtn.classList.add("chosen");
 
-    // Highlight correct answers if configured
+    // Mark all correct answers (only class names, no DOM redraw)
     buttons.forEach((button, index) => {
-        if (uiconfig.highlight_correct_answer && decodedScores[currentQuestionsIndex][index].toString().toLowerCase() === 'true') {
-            button.classList.add("correct");
-        }
-        button.disabled = true;
+      if (decodedScores[currentQuestionsIndex][index].toString().toLowerCase() === 'true') {
+        button.classList.add("correct");
+      }
     });
+  } else {
+    selectedBtn.classList.add("neutral");
+    score += Number(selectedScore);
+  }
 
-    nextButton.style.display = "block";
+  // Trigger CSS cascade with one class on the parent
+  answerButton.classList.add("answer-revealed");
+
+  nextButton.style.display = "block";
 }
 
 function showScore() {
