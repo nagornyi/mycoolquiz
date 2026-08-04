@@ -36,7 +36,7 @@ After adding a new language, you would also need to add the questions and locali
 ## Run development server
 
 ```sh
-npm install --registry https://registry.npmjs.org
+npm install
 npm run seed
 npm run start:dev
 ```
@@ -46,7 +46,7 @@ npm run start:dev
 ```sh
 # Replace REDIS_URL with the address of the production Redis DB
 export REDIS_URL="redis://localhost:6379"
-npm install --registry https://registry.npmjs.org
+npm install
 npm run seed
 npm run start:prod
 ```
