@@ -1,7 +1,7 @@
 // Quiz: literary evening for Ukrainian & Japanese speakers
 export default {
   id: "literary-evening",
-  title: "Literary Evening: Ukraine × Japan 📖",
+  title: "Literary Evening 🇺🇦🤝🇯🇵",
   languages: [
     { code: "uk", name: "Українська" },
     { code: "ja", name: "日本語" }
