@@ -1,4 +1,3 @@
-import { uiconfig } from './uiconfig.js';
 import { startFireworks, stopFireworks } from './fireworks.js';
 
 const appContainer = document.getElementById('app');
@@ -18,6 +17,7 @@ var score = 0;
 var questions = [];
 var localisations = {};
 var questionScores = {};
+var uiconfig = {};
 
 function selectQuizLanguage()  {
     resetState();
@@ -253,4 +253,11 @@ async function initializeQuiz(lang) {
   }
 }
 
-selectQuizLanguage();
+// Load the active quiz's UI configuration (button labels, score screen
+// colors/emojis, etc.) before letting the user pick a language
+async function init() {
+  uiconfig = await fetchData('/api/uiconfig') || {};
+  selectQuizLanguage();
+}
+
+init();

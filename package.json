@@ -6,7 +6,9 @@
   "scripts": {
     "start:dev": "NODE_ENV=development node app.js",
     "start:prod": "NODE_ENV=production node app.js",
-    "seed": "node src/seedQuizData.js"
+    "seed": "node src/seedQuizData.js",
+    "seed:poetry": "node src/seedQuizData.js poetry-quiz",
+    "seed:literary-evening": "node src/seedQuizData.js literary-evening"
   },
   "dependencies": {
     "fastify": "^5.11.2",

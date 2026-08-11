@@ -26,8 +26,15 @@ fastify.register(await import('@fastify/static'), {
 });
 
 fastify.get('/', async (request, reply) => {
+  // Load the active quiz's metadata (title & available languages) from Redis
+  const metaString = await redis.get(`quiz:${appconfig.active_quiz}:meta`);
+  if (!metaString) {
+    return reply.status(500).send({ error: `Quiz "${appconfig.active_quiz}" has not been seeded. Run the seed script first.` });
+  }
+  const quizMeta = JSON.parse(metaString);
+
   // Generate language selection buttons dynamically
-  const languageButtons = appconfig.quiz_languages
+  const languageButtons = quizMeta.languages
     .map(lang => `<button class="lang-btn" data-lang="${lang.code}">${lang.name}</button>`)
     .join("\n");
 
@@ -37,14 +44,14 @@ fastify.get('/', async (request, reply) => {
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>${appconfig.quiz_title}</title>
+      <title>${quizMeta.title}</title>
       <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon" />
       <link rel="stylesheet" href="/public/css/main.css">
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   </head>
   <body>
       <div class="app" id="app">
-          <h1 id="quiz-name">${appconfig.quiz_title}</h1>
+          <h1 id="quiz-name">${quizMeta.title}</h1>
           <div id="language-selection" style="display: none;">
             ${languageButtons}
           </div>
@@ -68,7 +75,7 @@ fastify.get('/', async (request, reply) => {
 // API routes
 fastify.get('/api/questions/:lang', async (req, reply) => {
   const { lang } = req.params;
-  const questionsString = await redis.get(`questions:${lang}`);
+  const questionsString = await redis.get(`quiz:${appconfig.active_quiz}:questions:${lang}`);
   
   if (!questionsString) {
     return reply.status(404).send({ error: 'Questions not found' });
@@ -82,8 +89,10 @@ fastify.get('/api/questions/:lang', async (req, reply) => {
     return reply.status(500).send({ error: 'Failed to parse questions' });
   }
 
-  // Randomize the questions if the configuration is set to true
-  if (appconfig.randomise_questions) {
+  // Randomize the questions if the active quiz's configuration is set to true
+  const uiconfigString = await redis.get(`quiz:${appconfig.active_quiz}:uiconfig`);
+  const quizUiconfig = uiconfigString ? JSON.parse(uiconfigString) : {};
+  if (quizUiconfig.randomise_questions) {
     questions = questions.sort(() => Math.random() - 0.5);
   }
 
@@ -95,9 +104,15 @@ fastify.get('/api/questions/:lang', async (req, reply) => {
 
 fastify.get('/api/localisations/:lang', async (req, reply) => {
   const { lang } = req.params;
-  const localisations = await redis.get(`localisations:${lang}`);
+  const localisations = await redis.get(`quiz:${appconfig.active_quiz}:localisations:${lang}`);
   if (!localisations) return reply.status(404).send({ error: 'Localisations not found' });
   reply.send(JSON.parse(localisations));
+});
+
+fastify.get('/api/uiconfig', async (req, reply) => {
+  const uiconfig = await redis.get(`quiz:${appconfig.active_quiz}:uiconfig`);
+  if (!uiconfig) return reply.status(404).send({ error: 'UI config not found' });
+  reply.send(JSON.parse(uiconfig));
 });
 
 fastify.setErrorHandler((error, request, reply) => {
