@@ -140,7 +140,7 @@ a:focus, a:active, a:visited {
 /* Disable hover styles for touch devices */
 @media (hover: none) {
   #next-btn:hover {
-    background-color: initial; /* Reset to default or desired style */
+    background-color: #0066CC; /* Keep the normal button color instead of falling back to the browser default */
   }
 }
 
