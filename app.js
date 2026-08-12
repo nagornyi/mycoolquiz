@@ -19,24 +19,24 @@ const fastify = Fastify({
   },
 });
 
-// Serve static files
+// Serve static files. Cache them for a while so repeat visits don't need to
+// round-trip to the server just to revalidate an unchanged bundle/stylesheet
+// — meaningful on a CPU-constrained instance where every request counts.
 fastify.register(await import('@fastify/static'), {
   root: path.join(__dirname, 'public'),
-  prefix: '/public/'
+  prefix: '/public/',
+  maxAge: '1h',
 });
 
 fastify.get('/', async (request, reply) => {
-  // Load the active quiz's metadata (title & available languages) from Redis
+  // Load the active quiz's metadata just to fail fast (with a clear error)
+  // if it hasn't been seeded yet. The Preact app fetches the same data via
+  // /api/meta once it mounts.
   const metaString = await redis.get(`quiz:${appconfig.active_quiz}:meta`);
   if (!metaString) {
     return reply.status(500).send({ error: `Quiz "${appconfig.active_quiz}" has not been seeded. Run the seed script first.` });
   }
   const quizMeta = JSON.parse(metaString);
-
-  // Generate language selection buttons dynamically
-  const languageButtons = quizMeta.languages
-    .map(lang => `<button class="lang-btn" data-lang="${lang.code}">${lang.name}</button>`)
-    .join("\n");
 
   reply.type('text/html').send(`
   <!DOCTYPE html>
@@ -47,32 +47,25 @@ fastify.get('/', async (request, reply) => {
       <title>${quizMeta.title}</title>
       <link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon" />
       <link rel="stylesheet" href="/public/css/main.css">
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
   </head>
   <body>
-      <div class="app" id="app">
-          <h1 id="quiz-name">${quizMeta.title}</h1>
-          <div id="language-selection" style="display: none;">
-            ${languageButtons}
-          </div>
-          <button id="start-quiz-btn" style="display: none;"></button>
-          <div class="quiz">
-              <div id="quiz-info" class="framed-text" style="display: none;"></div>
-              <h2 id="question" style="display: none;"></h2>
-              <div id="answer-buttons"></div>
-              <div class="button-container">
-                  <button id="next-btn" style="display: none;"></button>
-              </div>
-          </div>
-          <canvas id="fireworks"></canvas>
-      </div>
-      <script src="/public/js/quiz.js" type="module"></script>
+      <div id="app-root"></div>
+      <script src="/public/dist/main.js" type="module"></script>
   </body>
   </html>
   `);
 });
 
 // API routes
+fastify.get('/api/meta', async (request, reply) => {
+  const metaString = await redis.get(`quiz:${appconfig.active_quiz}:meta`);
+  if (!metaString) return reply.status(404).send({ error: 'Quiz metadata not found' });
+  reply.send(JSON.parse(metaString));
+});
+
 fastify.get('/api/questions/:lang', async (req, reply) => {
   const { lang } = req.params;
   const questionsString = await redis.get(`quiz:${appconfig.active_quiz}:questions:${lang}`);
@@ -96,10 +89,7 @@ fastify.get('/api/questions/:lang', async (req, reply) => {
     questions = questions.sort(() => Math.random() - 0.5);
   }
 
-  // Encode the questions to Base64 after ensuring UTF-8 encoding
-  const jsonString = JSON.stringify(questions);
-   
-  reply.send(jsonString);
+  reply.send(JSON.stringify(questions));
 });
 
 fastify.get('/api/localisations/:lang', async (req, reply) => {

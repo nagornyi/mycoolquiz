@@ -1,6 +1,9 @@
 # dependencies
 /node_modules
 
+# build output
+/public/dist
+
 # misc
 .DS_Store
 *.pem

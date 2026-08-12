@@ -1,6 +1,6 @@
 # My Cool Quiz
 
-A simple quiz application that is implemented using the Fastify web framework. The app can host multiple quizzes, each with its own questions, localisations, and result-screen styling — but only one quiz is served (active) at a time. Each quiz can be localised into multiple languages.
+A simple quiz application that is implemented using the Fastify web framework, with a Preact frontend. The app can host multiple quizzes, each with its own questions, localisations, and result-screen styling — but only one quiz is served (active) at a time. Each quiz can be localised into multiple languages.
 
 ## Quizzes bundled with this app
 
@@ -117,9 +117,12 @@ After adding a new language, re-seed that quiz (e.g. `npm run seed:poetry`) and 
 
 ```sh
 npm install
+npm run build
 npm run seed
 npm run start:dev
 ```
+
+The frontend lives in `frontend/` (Preact) and is bundled by Vite into `public/dist/main.js`, which is served alongside the rest of `public/` by Fastify. Re-run `npm run build` after changing anything under `frontend/`.
 
 ## Run production server
 
@@ -127,6 +130,9 @@ npm run start:dev
 # Replace REDIS_URL with the address of the production Redis DB
 export REDIS_URL="redis://localhost:6379"
 npm install
+npm run build
 npm run seed
 npm run start:prod
 ```
+
+When deploying (e.g. on Render), set the build command to `npm install && npm run build` and the start command to `npm run start:prod`, so the frontend bundle is produced before the server starts.

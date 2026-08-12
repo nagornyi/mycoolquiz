@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', sans-serif;
   box-sizing: border-box;
 }
 
@@ -9,6 +9,10 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  /* Always reserve space for the vertical scrollbar so that switching
+     between screens/questions with different content heights doesn't
+     toggle the scrollbar on/off and shift the centered .app horizontally. */
+  overflow-y: scroll;
 }
 
 body {
@@ -46,25 +50,6 @@ body {
   font-weight: 600;
   border-bottom: 2px solid green;
   padding-bottom: 20px;     
-}
-
-a {
-  color: #1E90FF;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease, border-bottom 0.3s ease;
-  border-bottom: 2px solid transparent;
-}
-
-a:hover {
-  outline: none;
-  color: skyblue;
-  border-bottom: 2px solid;
-}
-
-a:focus, a:active, a:visited {
-  outline: none;
-  color: #1E90FF;
 }
 
 .quiz {
@@ -176,11 +161,6 @@ a:focus, a:active, a:visited {
   background-color: #003a75;
 }
 
-.lang-btn.selected {
-  background-color: #FF69B4;
-  color: #FFFFFF;
-}
-
 #start-quiz-btn {
   display: flex;
   justify-content: center;
@@ -275,13 +255,20 @@ a:focus, a:active, a:visited {
   font-size: 24px;
 }
 
+.framed-result strong {
+  color: #FFD700;
+  font-size: 1.3em;
+  letter-spacing: 1px;
+}
+
 canvas#fireworks {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: -1; /* Places it behind other content */
+  pointer-events: none; /* Never intercept clicks on the UI above it */
 }
 
 /* Media queries for responsive design */
@@ -306,7 +293,6 @@ canvas#fireworks {
       padding: 15px;
   }
   .chosen,
-  .btn.chosen,
   .btn.correct,
   .btn.incorrect,
   .btn.neutral {

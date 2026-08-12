@@ -1,17 +1,18 @@
+// Canvas-based fireworks animation, adapted to accept its target elements
+// directly instead of looking them up by id/class, so it can be driven from
+// a Preact component via refs.
+
 let animationFrameId; // Store the animation frame ID
 let fireworkIntervalId; // Store the interval ID for creating fireworks
 let running = false; // Track if the animation is running
 
-export function startFireworks() {
-  const canvas = document.getElementById('fireworks');
-  const app = document.querySelector('.app-clear');
+export function startFireworks(canvas) {
   const ctx = canvas.getContext('2d');
 
-  // Ensure the canvas matches the size of the app div
+  // Cover the full viewport so fireworks aren't confined to the score card
   function resizeCanvas() {
-    const rect = app.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
   }
 
   resizeCanvas();
@@ -56,7 +57,7 @@ export function startFireworks() {
   const fireworks = [];
   function createFirework() {
     const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height / 2;
+    const y = (Math.random() * canvas.height) / 2;
     const colors = [
       Math.random() * 255,
       Math.random() * 255,
@@ -78,13 +79,21 @@ export function startFireworks() {
   running = true;
   fireworkIntervalId = setInterval(createFirework, 700);
   loop();
+
+  // Keep resize listener cleanup available to stopFireworks via closure
+  startFireworks._resizeCanvas = resizeCanvas;
 }
 
-export function stopFireworks() {
+export function stopFireworks(canvas) {
   running = false; // Stop the loop
   cancelAnimationFrame(animationFrameId); // Cancel the animation frame
   clearInterval(fireworkIntervalId); // Clear the interval for creating fireworks
-  const canvas = document.getElementById('fireworks');
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  if (startFireworks._resizeCanvas) {
+    window.removeEventListener('resize', startFireworks._resizeCanvas);
+    startFireworks._resizeCanvas = null;
+  }
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  }
 }
