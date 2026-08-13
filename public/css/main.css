@@ -63,16 +63,32 @@ body {
   margin-bottom: 20px;
 }
 
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #2C2C2C;
+  border-radius: 64px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #0066CC;
+  border-radius: 64px;
+  transition: width 0.3s ease;
+}
+
 .btn {
   background: #2C2C2C;
   color: #FFFFFF;
   font-size: 18px;
   font-weight: 500;
-  width: 100%; 
-  border: 1px solid #444;
+  width: 100%;
+  border: 2px solid #444;
   padding: 15px;
   margin: 10px 0;
-  text-align: left;
+  text-align: center;
   border-radius: 64px;
   cursor: pointer;
   transition: all 0.3s;
@@ -183,19 +199,15 @@ body {
   background-color: #003a75;
 }
 
-/* Bounce animation for the chosen answer */
-@keyframes bounce {
-  0%, 100% {
-      transform: translateY(0);
-  }
-  50% {
-      transform: translateY(-5px);
-  }
-}
-
 .btn.chosen {  
   transition: transform 0.2s ease-in-out, background 0.3s ease;
-  animation: bounce 1s infinite;
+}
+
+/* Icon supplements color so correct/incorrect isn't conveyed by hue alone
+   (helps colorblind users and reduces reliance on the red/green pairing). */
+.answer-icon {
+  vertical-align: -3px;
+  margin-right: 6px;
 }
 
 .answer-revealed .btn.neutral {
@@ -257,7 +269,7 @@ body {
 
 .framed-result strong {
   color: #FFD700;
-  font-size: 1.3em;
+  font-size: 26px;
   letter-spacing: 1px;
 }
 
@@ -292,23 +304,10 @@ canvas#fireworks {
       width: 100%;
       padding: 15px;
   }
-  .chosen,
-  .btn.correct,
-  .btn.incorrect,
-  .btn.neutral {
-    animation: none !important;
-    transform: none !important;
-  }
   button, .btn, .lang-btn, #next-btn {
     -webkit-tap-highlight-color: transparent;
   }
   button:focus, .btn:focus {
     outline: none;
-  }
-}
-
-@media (min-width: 601px) {
-  .chosen {
-    will-change: transform;
   }
 }

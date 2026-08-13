@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'preact/hooks';
+import { Check, X } from 'lucide-preact';
 import { fetchData } from './api.js';
 import { startFireworks, stopFireworks } from './fireworks.js';
 
@@ -137,9 +138,12 @@ export function App() {
 
   return (
     <div id="app" class={isScoreStage ? 'app-clear' : 'app'}>
-      <h1 id="quiz-name">
-        {stage === STAGE.LANGUAGE ? meta.title : (localisations.quiz_name || meta.title)}
-      </h1>
+      <h1
+        id="quiz-name"
+        dangerouslySetInnerHTML={{
+          __html: stage === STAGE.LANGUAGE ? meta.title : (localisations.quiz_name || meta.title),
+        }}
+      />
 
       {stage === STAGE.LANGUAGE && (
         <div id="language-selection">
@@ -167,12 +171,25 @@ export function App() {
             <b>{uiconfig[lang].number_of_questions}:</b> {preparedQuestions.length}
             <br />
             <br />
-            <b>{uiconfig[lang].quiz_description}:</b> {localisations.quiz_description}
+            <b>{uiconfig[lang].quiz_description}:</b>{' '}
+            <span dangerouslySetInnerHTML={{ __html: localisations.quiz_description }} />
           </div>
         )}
 
         {stage === STAGE.QUESTION && currentQuestion && (
           <>
+            <div
+              class="progress-bar"
+              role="progressbar"
+              aria-valuenow={currentIndex + 1}
+              aria-valuemin="0"
+              aria-valuemax={preparedQuestions.length}
+            >
+              <div
+                class="progress-bar-fill"
+                style={{ width: `${((currentIndex + 1) / preparedQuestions.length) * 100}%` }}
+              />
+            </div>
             <h2
               id="question"
               dangerouslySetInnerHTML={{
@@ -237,7 +254,9 @@ function AnswerButton({ answer, index, selectedAnswerIndex, uiconfig, onSelect }
       disabled={revealed}
       onClick={() => onSelect(index)}
     >
-      {answer.text}
+      {stateClass === 'correct' && <Check class="answer-icon" size={18} strokeWidth={2.5} aria-hidden="true" />}
+      {stateClass === 'incorrect' && <X class="answer-icon" size={18} strokeWidth={2.5} aria-hidden="true" />}
+      <span dangerouslySetInnerHTML={{ __html: answer.text }} />
     </button>
   );
 }
