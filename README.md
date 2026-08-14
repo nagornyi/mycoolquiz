@@ -7,7 +7,7 @@ A simple quiz application that is implemented using the Fastify web framework, w
 - `poetry-quiz` — a classic English/Ukrainian poetry quiz.
 - `literary-evening` — a Ukrainian/Japanese literature quiz about writers and poets.
 
-Every quiz lives in its own file under `seed/quizzes/`, and all quizzes are registered in `seed/quizzes/index.js`.
+Every quiz lives in its own file under `seed/quizzes/`, and every file there is loaded automatically — no separate registration step needed.
 
 ## Choosing which quiz is served
 
@@ -60,33 +60,27 @@ export default {
     en: { quiz_name, quiz_description, maxscore, highscore, avgscore, lowscore },
     uk: { /* ... */ }
   },
+  // Optional. Only needed if this quiz should behave or look different from
+  // the shared defaults in seed/globalUiConfig.js (see below). You can
+  // override as much or as little as you like, e.g.:
   uiconfig: {
-    en: { quiz_start_btn, next_question_btn, quiz_restart_btn, number_of_questions, quiz_description, final_result },
-    uk: { /* ... */ },
-    randomise_answers: true,
-    randomise_questions: true,
-    highlight_correct_answer: true,
-    fireworks_on_result_screen: true,
-    maxscore: { color, bordercolor, emoji },
-    highscore: { color, bordercolor, emoji },
-    avgscore: { color, bordercolor, emoji },
-    lowscore: { color, bordercolor, emoji }
+    randomise_questions: false,
+    maxscore: { emoji: "🏆" }
   }
 };
 ```
 
-Then register it in `seed/quizzes/index.js`:
-
-```js
-import myQuiz from './myQuiz.js';
-
-export const quizzes = {
-  // ...existing quizzes...
-  [myQuiz.id]: myQuiz
-};
-```
-
 Use HTML markup in the `question` field to insert page breaks and paragraphs for long questions. Seed the new quiz (`node src/seedQuizData.js my-quiz`), set it as `active_quiz` in `appconfig.js`, and restart the app.
+
+## Shared UI settings
+
+Most quizzes look and behave the same way, so their common settings live in one place: `seed/globalUiConfig.js`. This file provides:
+
+- Button and label text for the `en`, `uk`, and `ja` languages (e.g. "Start the quiz", "Next").
+- The color, border color, and emoji shown on the result screen for each score level (`maxscore`, `highscore`, `avgscore`, `lowscore`).
+- The default on/off settings described in [Other options](#other-options) below.
+
+When a quiz is seeded, its own `uiconfig` (if any) is layered on top of these defaults. A quiz's `uiconfig` can be left out entirely, or it can override just the parts it needs to change — down to a single setting, such as one score level's emoji — without repeating everything else from `seed/globalUiConfig.js`.
 
 ## Scoring system and points
 
@@ -96,13 +90,26 @@ The score range is divided into three equal segments using (MAX_SCORE - MIN_SCOR
 
 ## Other options
 
-Questions are displayed in randomised order if the `randomise_questions` option in the active quiz's `uiconfig` is set to true. Answers are displayed in randomised order if the `randomise_answers` option in the active quiz's `uiconfig` is set to true.
+By default, questions and answers are shown in a random order each time, the correct answer is highlighted after you pick one, and fireworks play on the result screen. Any quiz can turn these off (or back on) individually by setting the matching option in its own `uiconfig`:
 
-You can enable or disable the fireworks animation on the result screen by changing the `fireworks_on_result_screen` option in the active quiz's `uiconfig`.
+- `randomise_questions` — show the questions in random order.
+- `randomise_answers` — show each question's answers in random order.
+- `highlight_correct_answer` — reveal the correct answer once you've picked one.
+- `fireworks_on_result_screen` — play the fireworks animation on the result screen.
+
+For example, to turn off question randomisation for one quiz only, set `uiconfig: { randomise_questions: false }` in that quiz's file.
 
 ## Add new languages to a quiz
 
-You can add as many languages as you like to any quiz. Add the language to the quiz's `languages` array, then add matching entries to that quiz's `questions`, `localisations`, and `uiconfig` objects for the new language code, e.g.:
+You can add as many languages as you like to any quiz. Add the language to the quiz's `languages` array, then add matching entries to that quiz's `questions` and `localisations` objects for the new language code. Button/label text for `en`, `uk`, and `ja` is already provided by `seed/globalUiConfig.js`; for any other language code, add a matching entry under that quiz's own `uiconfig`, e.g.:
+
+```js
+uiconfig: {
+  fr: { quiz_start_btn, next_question_btn, quiz_restart_btn, number_of_questions, quiz_description, final_result }
+}
+```
+
+Also add the language to the `languages` array:
 
 ```js
 languages: [
