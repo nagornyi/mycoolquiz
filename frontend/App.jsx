@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef } from 'preact/hooks';
 import { Check, X } from 'lucide-preact';
 import { fetchData } from './api.js';
 import { startFireworks, stopFireworks } from './fireworks.js';
+import { shuffle } from '../shared/shuffle.js';
 
 const STAGE = {
   LOADING: 'loading',
@@ -48,7 +49,7 @@ export function App() {
     if (!uiconfig.randomise_answers) return questions;
     return questions.map((q) => ({
       ...q,
-      answers: [...q.answers].sort(() => Math.random() - 0.5),
+      answers: shuffle(q.answers),
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questions, playthroughId]);

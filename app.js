@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import redis from './src/redisClient.js';
 import { appconfig } from './appconfig.js';
+import { shuffle } from './shared/shuffle.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -86,7 +87,7 @@ fastify.get('/api/questions/:lang', async (req, reply) => {
   const uiconfigString = await redis.get(`quiz:${appconfig.active_quiz}:uiconfig`);
   const quizUiconfig = uiconfigString ? JSON.parse(uiconfigString) : {};
   if (quizUiconfig.randomise_questions) {
-    questions = questions.sort(() => Math.random() - 0.5);
+    questions = shuffle(questions);
   }
 
   reply.send(JSON.stringify(questions));

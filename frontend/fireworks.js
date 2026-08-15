@@ -43,11 +43,14 @@ export function startFireworks(canvas) {
       ctx.fill();
     }
 
-    update() {
+    // `speed` and the opacity decay rate are tuned per frame at 60fps, so we
+    // scale movement by how many "60fps frames" actually elapsed. Without
+    // this, the animation runs faster on higher refresh-rate displays
+    update(frameFactor) {
       this.particles.forEach((p) => {
-        p.x += Math.cos(p.angle) * p.speed;
-        p.y += Math.sin(p.angle) * p.speed;
-        p.opacity -= 0.02;
+        p.x += Math.cos(p.angle) * p.speed * frameFactor;
+        p.y += Math.sin(p.angle) * p.speed * frameFactor;
+        p.opacity -= 0.02 * frameFactor;
         if (p.opacity > 0) this.drawParticle(p);
       });
       this.particles = this.particles.filter((p) => p.opacity > 0);
@@ -66,9 +69,16 @@ export function startFireworks(canvas) {
     fireworks.push(new Firework(x, y, colors));
   }
 
-  function loop() {
+  function loop(timestamp) {
+    if (loop.lastTime === undefined) loop.lastTime = timestamp;
+    const deltaTime = timestamp - loop.lastTime;
+    loop.lastTime = timestamp;
+    // Frames elapsed relative to a 60fps baseline, capped so a dropped/late
+    // frame (e.g. tab backgrounded) doesn't cause a big visual jump.
+    const frameFactor = Math.min(deltaTime / (1000 / 60), 4);
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    fireworks.forEach((firework) => firework.update());
+    fireworks.forEach((firework) => firework.update(frameFactor));
     fireworks.splice(0, fireworks.length > 5 ? fireworks.length - 5 : 0);
     if (running) {
       animationFrameId = requestAnimationFrame(loop);
@@ -78,7 +88,7 @@ export function startFireworks(canvas) {
   // Start animation
   running = true;
   fireworkIntervalId = setInterval(createFirework, 700);
-  loop();
+  animationFrameId = requestAnimationFrame(loop);
 
   // Keep resize listener cleanup available to stopFireworks via closure
   startFireworks._resizeCanvas = resizeCanvas;
