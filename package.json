@@ -1,6 +1,6 @@
 {
   "name": "my-cool-quiz",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
@@ -8,8 +8,9 @@
     "start:prod": "NODE_ENV=production node app.js",
     "build": "vite build",
     "seed": "node src/seedQuizData.js",
-    "seed:poetry": "node src/seedQuizData.js poetry-quiz",
-    "seed:literary-evening": "node src/seedQuizData.js literary-evening"
+    "seed:poetry-quiz": "node src/seedQuizData.js poetry-quiz",
+    "seed:literary-evening": "node src/seedQuizData.js literary-evening",
+    "seed:literary-quiz": "node src/seedQuizData.js literary-quiz"
   },
   "dependencies": {
     "@fastify/static": "^10.1.3",

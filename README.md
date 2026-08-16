@@ -6,6 +6,7 @@ A simple quiz application that is implemented using the Fastify web framework, w
 
 - `poetry-quiz` — a classic English/Ukrainian poetry quiz.
 - `literary-evening` — a Ukrainian/Japanese literature quiz about writers and poets.
+- `literary-quiz` — a Ukrainian/Japanese/English literature trivia quiz.
 
 Every quiz lives in its own file under `seed/quizzes/`, and every file there is loaded automatically — no separate registration step needed.
 

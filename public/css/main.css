@@ -76,6 +76,8 @@ body {
 }
 
 .btn {
+  display: flex;
+  align-items: center;
   background: #2C2C2C;
   color: #FFFFFF;
   font-size: 18px;
@@ -200,10 +202,30 @@ body {
 }
 
 /* Icon supplements color so correct/incorrect isn't conveyed by hue alone
-   (helps colorblind users and reduces reliance on the red/green pairing). */
-.answer-icon {
-  vertical-align: -3px;
+   (helps colorblind users and reduces reliance on the red/green pairing).
+   The slot is always rendered at a fixed width, whether or not it holds an
+   icon, so revealing the answer never changes the button's layout/height. */
+.answer-icon-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
   margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.answer-text {
+  flex: 1;
+  text-align: left;
+}
+
+.answer-icon {
+  display: block;
+}
+
+/* Muted so the default placeholder diamond reads as a bullet, not a verdict */
+.answer-icon-placeholder {
+  opacity: 0.4;
 }
 
 .answer-revealed .btn.neutral {

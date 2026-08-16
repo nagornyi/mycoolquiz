@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'preact/hooks';
-import { Check, X } from 'lucide-preact';
+import { Check, X, Diamond } from 'lucide-preact';
 import { fetchData } from './api.js';
 import { startFireworks, stopFireworks } from './fireworks.js';
 import { shuffle } from '../shared/shuffle.js';
@@ -241,11 +241,22 @@ function AnswerButton({ answer, index, selectedAnswerIndex, uiconfig, onSelect }
   const isChosen = selectedAnswerIndex === index;
   const revealed = selectedAnswerIndex !== null;
   let stateClass = '';
+  // Default to a subtle placeholder diamond so the slot never looks empty;
+  // it's replaced with a check/cross once the answer is revealed.
+  let Icon = Diamond;
+  let isPlaceholder = true;
   if (revealed) {
     if (uiconfig.highlight_correct_answer) {
       const isCorrect = answer.score.toString().toLowerCase() === 'true';
-      if (isCorrect) stateClass = 'correct';
-      else if (isChosen) stateClass = 'incorrect';
+      if (isCorrect) {
+        stateClass = 'correct';
+        Icon = Check;
+        isPlaceholder = false;
+      } else if (isChosen) {
+        stateClass = 'incorrect';
+        Icon = X;
+        isPlaceholder = false;
+      }
     } else if (isChosen) {
       stateClass = 'neutral';
     }
@@ -256,9 +267,19 @@ function AnswerButton({ answer, index, selectedAnswerIndex, uiconfig, onSelect }
       disabled={revealed}
       onClick={() => onSelect(index)}
     >
-      {stateClass === 'correct' && <Check class="answer-icon" size={18} strokeWidth={2.5} aria-hidden="true" />}
-      {stateClass === 'incorrect' && <X class="answer-icon" size={18} strokeWidth={2.5} aria-hidden="true" />}
-      <span dangerouslySetInnerHTML={{ __html: answer.text }} />
+      {/* Icon slot always renders an icon (a subtle placeholder diamond by
+          default) so its reserved width never changes when an answer is
+          revealed, which would otherwise reflow the answer text and shift the
+          buttons below it. */}
+      <span class="answer-icon-slot" aria-hidden="true">
+        <Icon
+          class={`answer-icon${isPlaceholder ? ' answer-icon-placeholder' : ''}`}
+          size={isPlaceholder ? 10 : 18}
+          strokeWidth={2.5}
+          fill={isPlaceholder ? 'currentColor' : 'none'}
+        />
+      </span>
+      <span class="answer-text" dangerouslySetInnerHTML={{ __html: answer.text }} />
     </button>
   );
 }
