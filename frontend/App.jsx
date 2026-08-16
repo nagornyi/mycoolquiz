@@ -44,10 +44,11 @@ export function App() {
     })();
   }, []);
 
-  // Shuffle each question's answers once per question, per playthrough
+  // Shuffle the question order and each question's answers once per playthrough
   const preparedQuestions = useMemo(() => {
-    if (!uiconfig.randomise_answers) return questions;
-    return questions.map((q) => ({
+    const ordered = uiconfig.randomise_questions ? shuffle(questions) : questions;
+    if (!uiconfig.randomise_answers) return ordered;
+    return ordered.map((q) => ({
       ...q,
       answers: shuffle(q.answers),
     }));
